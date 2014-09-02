@@ -1,0 +1,317 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* for bootstrap */
+/* line 4, ../sass/partials/_listviews.scss */
+.listview-list {
+  background: #d7cfc2;
+  padding: 0.3em;
+}
+
+/* line 9, ../sass/partials/_listviews.scss */
+.listview-list-entry {
+  background: #ccc2b3;
+  margin: 0.5em;
+  border-style: solid;
+  border-width: 0.1em;
+  border-color: #ebe7e1;
+  padding: 0.3em;
+}
+/* line 16, ../sass/partials/_listviews.scss */
+.listview-list-entry a {
+  color: #8b4c39;
+}
+
+/* line 22, ../sass/partials/_listviews.scss */
+.listview-header {
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #c2b6a4;
+  color: #8b4c39;
+  text-align: center;
+  font-size: 1.5em;
+  border-style: solid;
+  border-width: 0.2em;
+  border-color: white;
+}
+
+/* FIXME */
+/* line 23, ../sass/partials/_hubby.scss */
+.hubby-meeting-header {
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #ae9e85;
+  color: #5f3939;
+  text-align: center;
+  font-size: 1.5em;
+  position: relative;
+}
+
+/* line 32, ../sass/partials/_hubby.scss */
+.hubby-meeting-item {
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+  background: #ccc2b3;
+  border-style: solid;
+  border-color: #c2b6a4;
+  margin: 0.1em;
+  position: relative;
+}
+
+/* line 41, ../sass/partials/_hubby.scss */
+.hubby-meeting-agenda-header {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+/* line 46, ../sass/partials/_hubby.scss */
+.hubby-meeting-header-agenda {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.5em;
+  margin: 0.5em;
+  font-family: "Architects Daughter";
+}
+
+/* line 55, ../sass/partials/_hubby.scss */
+.hubby-meeting-header-minutes {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.5em;
+  margin: 0.5em;
+  font-family: "Architects Daughter";
+}
+
+/* line 65, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-info {
+  font-size: 0.9em;
+  position: relative;
+  background: #b8aa94;
+}
+
+/* line 71, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-agenda-num {
+  font-size: 0.8em;
+  font-weight: bold;
+  position: relative;
+  top: 0em;
+  left: 0em;
+}
+
+/* line 79, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-fileid {
+  font-size: 0.8em;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* line 87, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-status {
+  font-size: 0.7em;
+  font-weight: bold;
+  position: absolute;
+  top: 0em;
+  width: 100%;
+  text-align: center;
+}
+
+/* line 96, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-text {
+  font-size: 0.9em;
+}
+
+/* line 100, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-attachment-marker {
+  font-size: 14px;
+  padding: 0.5em 1.5em;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  *zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FFB8AA94', endColorstr='#FF8A785C');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #b8aa94), color-stop(100%, #a49176));
+  background: -webkit-linear-gradient(#b8aa94, #a49176);
+  background: -moz-linear-gradient(#b8aa94, #a49176);
+  background: -o-linear-gradient(#b8aa94, #a49176);
+  background: linear-gradient(#b8aa94, #a49176);
+  -webkit-box-shadow: #d7cfc2 0 1px 0 inset;
+  -moz-box-shadow: #d7cfc2 0 1px 0 inset;
+  box-shadow: #d7cfc2 0 1px 0 inset;
+  border: 1px solid #998567;
+  color: white;
+  text-shadow: #786850 0 -1px 0;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #5f3939;
+}
+/* line 15, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-attachment-marker:hover {
+  text-decoration: none;
+}
+/* line 36, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-attachment-marker:hover {
+  background-color: #998567;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ae9e85), color-stop(100%, #998567));
+  background: -webkit-linear-gradient(#ae9e85, #998567);
+  background: -moz-linear-gradient(#ae9e85, #998567);
+  background: -o-linear-gradient(#ae9e85, #998567);
+  background: linear-gradient(#ae9e85, #998567);
+}
+/* line 39, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-attachment-marker:active {
+  -webkit-box-shadow: #907d60 0 1px 2px inset;
+  -moz-box-shadow: #907d60 0 1px 2px inset;
+  box-shadow: #907d60 0 1px 2px inset;
+}
+/* line 6, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-attachment-marker.disabled, .hubby-meeting-item-attachment-marker[disabled] {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6;
+  background: #a49176;
+  cursor: default;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 74, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/_sassy-buttons.sass */
+.hubby-meeting-item-attachment-marker::-moz-focus-inner {
+  padding: 0 !important;
+  margin: -1px !important;
+}
+
+/* line 107, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-action-marker {
+  font-size: 14px;
+  padding: 0.5em 1.5em;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  *zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FFB8AA94', endColorstr='#FF8A785C');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #b8aa94), color-stop(100%, #a49176));
+  background: -webkit-linear-gradient(#b8aa94, #a49176);
+  background: -moz-linear-gradient(#b8aa94, #a49176);
+  background: -o-linear-gradient(#b8aa94, #a49176);
+  background: linear-gradient(#b8aa94, #a49176);
+  -webkit-box-shadow: #d7cfc2 0 1px 0 inset;
+  -moz-box-shadow: #d7cfc2 0 1px 0 inset;
+  box-shadow: #d7cfc2 0 1px 0 inset;
+  border: 1px solid #998567;
+  color: white;
+  text-shadow: #786850 0 -1px 0;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #5f3939;
+}
+/* line 15, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-action-marker:hover {
+  text-decoration: none;
+}
+/* line 36, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-action-marker:hover {
+  background-color: #998567;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ae9e85), color-stop(100%, #998567));
+  background: -webkit-linear-gradient(#ae9e85, #998567);
+  background: -moz-linear-gradient(#ae9e85, #998567);
+  background: -o-linear-gradient(#ae9e85, #998567);
+  background: linear-gradient(#ae9e85, #998567);
+}
+/* line 39, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-action-marker:active {
+  -webkit-box-shadow: #907d60 0 1px 2px inset;
+  -moz-box-shadow: #907d60 0 1px 2px inset;
+  box-shadow: #907d60 0 1px 2px inset;
+}
+/* line 6, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+.hubby-meeting-item-action-marker.disabled, .hubby-meeting-item-action-marker[disabled] {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6;
+  background: #a49176;
+  cursor: default;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 74, ../../../../../../var/lib/gems/1.8/gems/sassy-buttons-0.2.6/stylesheets/_sassy-buttons.sass */
+.hubby-meeting-item-action-marker::-moz-focus-inner {
+  padding: 0 !important;
+  margin: -1px !important;
+}
+
+/* line 115, ../sass/partials/_hubby.scss */
+.hubby-action-text {
+  font-size: 0.9em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  border-color: #cccccc;
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* line 123, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-attachments {
+  font-size: 0.8em;
+  z-index: 1;
+  position: absolute;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  background: #e6e6e6;
+  border-style: solid;
+  border-color: #cccccc;
+  border-width: 1px;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+/* line 137, ../sass/partials/_hubby.scss */
+.hubby-meeting-item-attachments-header {
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  text-align: center;
+  background: #d9d9d9;
+}
+
+/* line 11, ../sass/screen.scss */
+#editor {
+  position: relative;
+  width: 100%;
+  height: 30em;
+}
+
+/* line 17, ../sass/screen.scss */
+h1 {
+  font-family: "Architects Daughter";
+}

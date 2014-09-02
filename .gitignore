@@ -47,6 +47,7 @@ bowercache.tar
 
 
 # built files
-stylesheets
-javascripts
+javascripts/conspectus
+
+build.js
 
