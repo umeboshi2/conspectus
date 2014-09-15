@@ -51,3 +51,7 @@ javascripts/common
 javascripts/conspectus
 build.js
 
+# generated scss
+sass/bootstrap-custom-*.scss
+sass/jqueryui-*.scss
+sass/screen-*.scss

@@ -4,25 +4,28 @@ define (require, exports, module) ->
 
   Templates = require 'common/templates'
 
-  MainBus = require 'msgbus'
-  
-  MainBus.reqres.setHandler 'get-navbar-color', ->
-    navbar = $ '#main-navbar'
-    navbar.css 'color'
-    
-  MainBus.reqres.setHandler 'get-navbar-bg-color', ->
-    navbar = $ '#main-navbar'
-    navbar.css 'background-color'
-    
   class MainPageLayout extends Backbone.Marionette.LayoutView
     template: Templates.BootstrapLayoutTemplate
+
+  class BootstrapNoGridLayout extends Backbone.Marionette.LayoutView
+    template: Templates.BootstrapNoGridLayoutTemplate
     
-  class BootstrapNavBarView extends Backbone.Marionette.ItemView
+  class BootstrapNavBarView extends Backbone.Marionette.LayoutView
     template: Templates.BootstrapNavBarTemplate
-        
-  
+    regions:
+      usermenu: '#user-menu'
+      mainmenu: '#main-menu'
+      
+  class LoginView extends Backbone.Marionette.ItemView
+    template: Templates.login_form
+
+  class UserMenuView extends Backbone.Marionette.ItemView
+    template: Templates.user_menu
+    
   module.exports =
     MainPageLayout: MainPageLayout
+    BootstrapNoGridLayout: BootstrapNoGridLayout
     BootstrapNavBarView: BootstrapNavBarView
-    
-  
+    LoginView: LoginView
+    UserMenuView: UserMenuView
+      
