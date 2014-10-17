@@ -51,16 +51,14 @@ define (require, exports, module) ->
       button '#modal-ok-button.btn.btn-default', 'Ok'
 
 
-  simple_blog_list = renderable () ->
+  simple_genus_list = renderable () ->
     div ->
-      a '.btn.btn-default', href:'#vtdendro/addblog', "Add something"
-      div '#bloglist-container.listview-list'
-      
-  simple_blog_info = renderable (blog) ->
-    div '.blog.listview-list-entry', ->
-      a href:'#vtdendro/viewblog/' + blog.name, blog.name
-      icon ".delete-blog-button.fa.fa-close.btn.btn-default.btn-xs",
-      blog:blog.name
+      a '.btn.btn-default', href:'#vtdendro/addgenus', "Add genus(not working)"
+      div '#genuslist-container.listview-list'
+
+  simple_genus_info = renderable (genus) ->
+    div '.genus.listview-list-entry', ->
+      a href:"#vtdendro/viewgenus/#{genus.name}", genus.name
       
   simple_post_page_view = renderable () ->
     div '.mytoolbar.row', ->
@@ -139,8 +137,8 @@ define (require, exports, module) ->
     main_vtdendro_view: main_vtdendro_view
     vtdendro_dashboard_view: vtdendro_dashboard_view
     blog_dialog_view: blog_dialog_view
-    simple_blog_list: simple_blog_list
-    simple_blog_info: simple_blog_info
+    simple_genus_list: simple_genus_list
+    simple_genus_info: simple_genus_info
     simple_post_view: simple_post_view
     simple_post_page_view: simple_post_page_view
     new_blog_form_view: new_blog_form_view

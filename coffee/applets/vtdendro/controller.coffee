@@ -47,8 +47,8 @@ define (require, exports, module) ->
       if @App.sidebar.hasView()
         console.log 'empty sidebar....'
         @App.sidebar.empty()
-      @set_header 'Vtdendro'
-      @list_blogs()
+      @set_header 'VT Dendro'
+      @genus_list()
       
     show_mainview: () ->
       @make_sidebar()
@@ -61,6 +61,13 @@ define (require, exports, module) ->
       #console.log 'genus_list called'
       @make_sidebar()
       glist = AppBus.reqres.request 'get_genus_collection'
+      response = glist.fetch()
+      response.done =>
+        window.glist = glist
+        view = new Views.SimpleGenusListView
+          collection: glist
+        @App.content.show view
+        Util.scroll_top_fast()
       
     list_blogs: () ->
       #console.log 'list_blogs called;'

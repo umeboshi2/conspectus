@@ -66,6 +66,11 @@ define (require, exports, module) ->
   class GenusCollection extends Backbone.Collection
     url: '/rest/v0/main/genus'
 
+    # wrap the parsing to retrieve the
+    # 'data' attribute from the json response
+    parse: (response) ->
+      return response.data
+      
   genus_collection = new GenusCollection
   AppBus.reqres.setHandler 'get_genus_collection', ->
     genus_collection

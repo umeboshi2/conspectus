@@ -21,58 +21,29 @@ define (require, exports, module) ->
   class BlogModal extends Backbone.Marionette.ItemView
     template: Templates.blog_dialog_view
     
-  class SimpleBlogInfoView extends Backbone.Marionette.ItemView
-    template: Templates.simple_blog_info
+  class SimpleGenusInfoView extends Backbone.Marionette.ItemView
+    template: Templates.simple_genus_info
 
-  class SimpleBlogListView extends Backbone.Marionette.CompositeView
-    childView: SimpleBlogInfoView
-    template: Templates.simple_blog_list
-    childViewContainer: '#bloglist-container'
+  class SimpleGenusListView extends Backbone.Marionette.CompositeView
+    childView: SimpleGenusInfoView
+    template: Templates.simple_genus_list
+    childViewContainer: '#genuslist-container'
     ui:
-      blogs: '#bloglist-container'
+      genuslist: '#genuslist-container'
 
     onDomRefresh: () ->
-      console.log 'onDomRefresh called on SimpleBlogListView'
-      @masonry = new Masonry "#bloglist-container",
+      console.log 'onDomRefresh called on SimpleGenusListView'
+      @masonry = new Masonry "#genuslist-container",
         gutter: 2
         isInitLayout: false
-        itemSelector: '.blog'
+        itemSelector: '.genus'
         columnWidth: 100
-      delete_buttons = $ '.delete-blog-button'
-      delete_buttons.hide()
-      delete_buttons.on 'click', (event) =>
-        target = $ event.currentTarget
-        blog = target.attr 'blog'
-        id = "#{blog}.tumblr.com"
-        model = @collection.get id
-        model.destroy()
-        #console.log "Delete #{blog}"
-        @masonry.reloadItems()
-        @masonry.layout()
       @set_layout()
       
     set_layout: ->
       @masonry.reloadItems()
       @masonry.layout()
-      blog = $ '.blog'
-      handlerIn = (event) ->
-        window.enterevent = event
-        button = $(event.target).find '.delete-blog-button'
-        button.show()
-        # set button to disappear after two seconds
-        # without this, some buttons appear to stick
-        # and stay when the mouse jumps between entries
-        # too quickly.
-        # FIXME configure time elsewhere?
-        setTimeout () ->
-          button.hide()
-        , 2000 
-      handlerOut = (event) ->
-        window.leaveevent = event
-        button = $(event.target).find '.delete-blog-button'
-        button.hide()
-      blog.hover handlerIn, handlerOut
-      
+    
   class NewBlogFormView extends FormView
     template: Templates.new_blog_form_view
     ui:
@@ -247,7 +218,7 @@ define (require, exports, module) ->
     SideBarView: SideBarView
     BlogModal: BlogModal
     MainVtdendroView: MainVtdendroView
-    SimpleBlogListView: SimpleBlogListView
+    SimpleGenusListView: SimpleGenusListView
     BlogPostListView: BlogPostListView
     NewBlogFormView: NewBlogFormView
     ConsumerKeyFormView: ConsumerKeyFormView
