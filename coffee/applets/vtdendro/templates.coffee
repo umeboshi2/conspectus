@@ -21,7 +21,8 @@ define (require, exports, module) ->
   button, a, nav, form, p,
   ul, li, b,
   h1, h2, h3,
-  subtitle, section, hr
+  subtitle, section, hr,
+  table, tr, td, th, thead
   } = teacup
             
   { form_group_input_div } = require 'common/templates'
@@ -50,33 +51,44 @@ define (require, exports, module) ->
       button '#modal-cancel-button.btn', 'cancel'
       button '#modal-ok-button.btn.btn-default', 'Ok'
 
-
-  simple_genus_list = renderable () ->
+  simple_toolbar = renderable () ->
     div '.mytoolbar.row', ->
       ul '.pager', ->
         li '.previous', ->
           icon '#prev-page-button.fa.fa-arrow-left.btn.btn-default'
         li '.next', ->
           icon '#next-page-button.fa.fa-arrow-right.btn.btn-default'
+    
+  simple_genus_list = renderable () ->
+    simple_toolbar()
     div ->
       div '#genuslist-container.listview-list'
 
   simple_genus_info = renderable (genus) ->
     div '.genus.listview-list-entry', ->
       a href:"#vtdendro/viewgenus/#{genus.name}", genus.name
-      
-  simple_post_page_view = renderable () ->
-    div '.mytoolbar.row', ->
-      ul '.pager', ->
-        li '.previous', ->
-          icon '#prev-page-button.fa.fa-arrow-left.btn.btn-default'
-        li ->
-          icon '#slideshow-button.fa.fa-play.btn.btn-default'
-        li '.next', ->
-          icon '#next-page-button.fa.fa-arrow-right.btn.btn-default'
-      #icon '#prev-page-button.fa.fa-arrow-left.btn.btn-default.pull-left'
-      #icon '#slideshow-button.fa.fa-play.btn.btn-default'
-    div '#posts-container.row'
+
+  simple_vtspecies_info = renderable (species) ->
+    div '.species.listview-list-entry', ->
+      a href:"#vtdendro/viewvtspecies/#{species.id}", species.cname
+
+  simple_vtspecies_list = renderable () ->
+    simple_toolbar()
+    div ->
+      div '#speclist-container.listview-list'
+
+  vtspecies_full_view = renderable (spec) ->
+    window.spec = spec
+    div '.listview-header', spec.cname
+    div '.listview-list-entry', "#{spec.genus} #{spec.species}"
+    table ->
+      for field in ['form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
+        tr '.listview-list-entry',  ->
+          td ->
+            strong "#{field}"
+            text spec[field]
+          td ->
+            img src:"#{spec.pictures[field].localurl}"
       
   simple_post_view = renderable (post) ->
     div '.listview-list-entry', ->
@@ -95,48 +107,6 @@ define (require, exports, module) ->
         a href:post.post_url, target:'_blank', ->
           img src:size.url
 
-  new_blog_form_view = renderable (model) ->
-    form_group_input_div
-      input_id: 'input_blogname'
-      label: 'Blog Name'
-      input_attributes:
-        name: 'blog_name'
-        placeholder: ''
-        value: 'dutch-and-flemish-painters'
-    input '.btn.btn-default.btn-xs', type:'submit', value:'Add Blog'
-        
-  consumer_key_form = renderable (settings) ->
-    form_group_input_div
-      input_id: 'input_key'
-      label: 'Consumer Key'
-      input_attributes:
-        name: 'consumer_key'
-        placeholder: ''
-        value: settings.consumer_key
-    form_group_input_div
-      input_id: 'input_secret'
-      label: 'Consumer Secret'
-      input_attributes:
-        name: 'consumer_secret'
-        placeholder: ''
-        value: settings.consumer_secret
-    form_group_input_div
-      input_id: 'input_token'
-      label: 'Token'
-      input_attributes:
-        name: 'token'
-        placeholder: ''
-        value: settings.token
-    form_group_input_div
-      input_id: 'input_tsecret'
-      label: 'Token Secret'
-      input_attributes:
-        name: 'token_secret'
-        placeholder: ''
-        value: settings.token_secret
-    input '.btn.btn-default.btn-xs', type:'submit', value:'Submit'
-    
-              
   module.exports =
     sidebar: sidebar
     main_vtdendro_view: main_vtdendro_view
@@ -144,9 +114,7 @@ define (require, exports, module) ->
     blog_dialog_view: blog_dialog_view
     simple_genus_list: simple_genus_list
     simple_genus_info: simple_genus_info
-    simple_post_view: simple_post_view
-    simple_post_page_view: simple_post_page_view
-    new_blog_form_view: new_blog_form_view
-    consumer_key_form: consumer_key_form
-    
+    simple_vtspecies_list: simple_vtspecies_list
+    simple_vtspecies_info: simple_vtspecies_info
+    vtspecies_full_view: vtspecies_full_view
     

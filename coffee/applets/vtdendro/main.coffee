@@ -19,6 +19,8 @@ define (require, exports, module) ->
     appRoutes:
       'vtdendro': 'start'
       'vtdendro/genuslist': 'genus_list'
+      'vtdendro/vtspecieslist': 'vtspecies_list'
+      'vtdendro/viewvtspecies/:id': 'view_vtspecies'
       
     
   MainBus.commands.setHandler 'vtdendro:route', () ->

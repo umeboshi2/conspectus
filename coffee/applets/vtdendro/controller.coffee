@@ -48,7 +48,7 @@ define (require, exports, module) ->
         console.log 'empty sidebar....'
         @App.sidebar.empty()
       @set_header 'VT Dendro'
-      @genus_list()
+      @vtspecies_list()
       
     show_mainview: () ->
       @make_sidebar()
@@ -69,6 +69,29 @@ define (require, exports, module) ->
           collection: glist
         @App.content.show view
         Util.scroll_top_fast()
-        
+
+    
+    vtspecies_list: () ->
+      @make_sidebar()
+      vlist = AppBus.reqres.request 'get_vtspecies_collection'
+      response = vlist.fetch()
+      response.done =>
+        view = new Views.SimpleVTSpeciesListView
+          collection: vlist
+        @App.content.show view
+        Util.scroll_top_fast()
+
+    view_vtspecies: (id) ->
+      @make_sidebar()
+      vlist = AppBus.reqres.request 'get_vtspecies_collection'
+      response = vlist.fetch()
+      response.done =>
+        window.vlist = vlist
+        spec = vlist.get id
+        view = new Views.VTSpecView
+          model: spec
+        @App.content.show view
+        Util.scroll_top_fast()
+      
   module.exports = Controller
   
