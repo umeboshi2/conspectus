@@ -52,8 +52,13 @@ define (require, exports, module) ->
 
 
   simple_genus_list = renderable () ->
+    div '.mytoolbar.row', ->
+      ul '.pager', ->
+        li '.previous', ->
+          icon '#prev-page-button.fa.fa-arrow-left.btn.btn-default'
+        li '.next', ->
+          icon '#next-page-button.fa.fa-arrow-right.btn.btn-default'
     div ->
-      a '.btn.btn-default', href:'#vtdendro/addgenus', "Add genus(not working)"
       div '#genuslist-container.listview-list'
 
   simple_genus_info = renderable (genus) ->

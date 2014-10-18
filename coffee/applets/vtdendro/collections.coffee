@@ -63,16 +63,32 @@ define (require, exports, module) ->
       model.fetch()
       return model
 
-  class GenusCollection extends Backbone.Collection
+  class GenusCollection extends PageableCollection
+    mode: 'server'
+    full: true
     url: '/rest/v0/main/genus'
 
-    # wrap the parsing to retrieve the
-    # 'data' attribute from the json response
     parse: (response) ->
-      return response.data
-      
+      #console.log "parsing response", response
+      #window.gcresponse = response
+      total_count = response.total_count
+      @state.totalRecords = total_count
+      super response.data
+
+    state:
+      firstPage: 0
+      pageSize: 10
+
+    queryParams:
+      pageSize: 'limit'
+      offset: () ->
+        offset = @state.currentPage * @state.pageSize
+        #console.log "offset is", offset
+        offset
+        
   genus_collection = new GenusCollection
   AppBus.reqres.setHandler 'get_genus_collection', ->
+    window.genuscollection = genus_collection
     genus_collection
     
   module.exports =

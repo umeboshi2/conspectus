@@ -18,11 +18,7 @@ define (require, exports, module) ->
   class Router extends BootStrapAppRouter
     appRoutes:
       'vtdendro': 'start'
-      'vtdendro/settings': 'settings_page'
       'vtdendro/genuslist': 'genus_list'
-      'vtdendro/listblogs': 'list_blogs'
-      'vtdendro/viewblog/:id': 'view_blog'
-      'vtdendro/addblog' : 'add_new_blog'
       
     
   MainBus.commands.setHandler 'vtdendro:route', () ->

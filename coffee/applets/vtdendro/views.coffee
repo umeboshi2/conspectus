@@ -32,7 +32,7 @@ define (require, exports, module) ->
       genuslist: '#genuslist-container'
 
     onDomRefresh: () ->
-      console.log 'onDomRefresh called on SimpleGenusListView'
+      #console.log 'onDomRefresh called on SimpleGenusListView'
       @masonry = new Masonry "#genuslist-container",
         gutter: 2
         isInitLayout: false
@@ -41,28 +41,43 @@ define (require, exports, module) ->
       @set_layout()
       
     set_layout: ->
+      @ui.genuslist.show()
       @masonry.reloadItems()
       @masonry.layout()
-    
-  class NewBlogFormView extends FormView
-    template: Templates.new_blog_form_view
-    ui:
-      blog_name: '[name="blog_name"]'
-
-    updateModel: ->
-      #console.log 'updateModel'
-      @collection = AppBus.reqres.request 'get_local_blogs'
-      @model = @collection.add_blog @ui.blog_name.val()
-
-    onSuccess: ->
-      #console.log 'onSuccess called'
-      navigate_to_url '#vtdendro/listblogs'
-  
-    createModel: ->
-      return new Backbone.Model url:'/'
-      
+      if @collection.state.currentPage == @collection.state.firstPage
+        $('#prev-page-button').hide()
+      else
+        $('#prev-page-button').show()
+      if @collection.state.currentPage == @collection.state.lastPage
+        $('#next-page-button').hide()
+      else
+        $('#next-page-button').show()
         
+
+    events:
+      'click #next-page-button': 'get_next_page'
+      'click #prev-page-button': 'get_prev_page'
+      
+    keycommands:
+      prev: 65
+      next: 90
+
+    get_another_page: (direction) ->
+      @ui.genuslist.hide()
+      switch direction
+        when 'prev' then response = @collection.getPreviousPage()
+        when 'next' then response = @collection.getNextPage()
+        else response = null
+      if response
+        response.done =>
+          @set_layout()
                 
+    get_next_page: () ->
+      @get_another_page 'next'
+
+    get_prev_page: () ->
+      @get_another_page 'prev'
+
   class MainVtdendroView extends Backbone.Marionette.ItemView
     template: Templates.main_vtdendro_view
 
@@ -220,7 +235,6 @@ define (require, exports, module) ->
     MainVtdendroView: MainVtdendroView
     SimpleGenusListView: SimpleGenusListView
     BlogPostListView: BlogPostListView
-    NewBlogFormView: NewBlogFormView
     ConsumerKeyFormView: ConsumerKeyFormView
     
     

@@ -52,7 +52,7 @@ define (require, exports, module) ->
       
     show_mainview: () ->
       @make_sidebar()
-      view = new Views.MainBumblrView
+      view = new Views.SimpleGenusListView
       @App.content.show view
       Util.scroll_top_fast()
       
@@ -62,49 +62,13 @@ define (require, exports, module) ->
       @make_sidebar()
       glist = AppBus.reqres.request 'get_genus_collection'
       response = glist.fetch()
+      #console.log 'my glist response', response
       response.done =>
-        window.glist = glist
+        #console.log "response.done for glist"
         view = new Views.SimpleGenusListView
           collection: glist
         @App.content.show view
         Util.scroll_top_fast()
-      
-    list_blogs: () ->
-      #console.log 'list_blogs called;'
-      @make_sidebar()
-      blogs = AppBus.reqres.request 'get_local_blogs'
-      view = new Views.SimpleBlogListView
-        collection: blogs
-      @App.content.show view
-      Util.scroll_top_fast()
-      
-      
-    view_blog: (blog_id) ->
-      #console.log 'view blog called for ' + blog_id
-      @make_sidebar()
-      make_collection = 'make_blog_post_collection'
-      base_hostname = blog_id + '.tumblr.com'
-      collection = AppBus.reqres.request make_collection, base_hostname
-      response = collection.fetch()
-      response.done =>
-        view = new Views.BlogPostListView
-          collection: collection
-        @App.content.show view
-        Util.scroll_top_fast()
-
-    add_new_blog: () ->
-      #console.log 'add_new_blog called'
-      @make_sidebar()
-      view = new Views.NewBlogFormView
-      @App.content.show view
-      Util.scroll_top_fast()
-            
-    settings_page: () ->
-      #console.log 'Settings page.....'
-      settings = AppBus.reqres.request 'get_app_settings'
-      view = new Views.ConsumerKeyFormView model:settings
-      @App.content.show view
-      Util.scroll_top_fast()
-      
+        
   module.exports = Controller
   
