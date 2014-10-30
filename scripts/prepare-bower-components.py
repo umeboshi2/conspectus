@@ -11,7 +11,7 @@ DEST_PATH = 'components'
 IGNORED_NEEDED = ['ace', 'ace-builds']
 
 # backbone.modal needs special handling
-IGNORED_NEEDED += ['backbone.modal']
+IGNORED_NEEDED += ['backbone.modal', 'qs']
 
 # font-awesome is already handled with compass
 # the other components are for testing
@@ -29,6 +29,7 @@ IGNORED = IGNORED_NEEDED + IGNORED_TESTING + IGNORED_NOT_NEEDED
 
 SPECIAL_PATHS = [
     'bower_components/bootstrap/js/modal.js',
+    'bower_components/qs/index.js',
     ]
 
 
