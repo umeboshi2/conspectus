@@ -29,6 +29,9 @@ define (require, exports, module) ->
         @ui.next_page_button.hide()
       else
         @ui.next_page_button.show()
+      if @collection.state.totalRecords <= @collection.state.pageSize
+        @ui.next_page_button.hide()
+        
 
     events:
       'click @ui.next_page_button': 'get_next_page'

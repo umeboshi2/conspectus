@@ -32,6 +32,7 @@ require.config
     masonry: "#{components}/masonry/masonry"
     outlayer: "#{components}/outlayer"
     imagesloaded: "#{components}/imagesloaded/imagesloaded"
+    qs: "#{components}/qs/index"
     
     # common is the path to the common modules
     # These should maybe be packaged as bower
@@ -63,6 +64,9 @@ require.config
     bblocalStorage:
       deps: ['backbone']
       exports: 'Backbone.localStorage'
+    qs:
+      exports: 'qs'
+      
   deps: ['require']
   callback: (require) ->
     'use strict'

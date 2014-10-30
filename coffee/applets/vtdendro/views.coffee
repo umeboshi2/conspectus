@@ -4,7 +4,8 @@ define (require, exports, module) ->
   Marionette = require 'marionette'
   Masonry = require 'masonry'
   imagesLoaded = require 'imagesloaded'
-
+  require 'qs'
+  
   FormView = require 'common/views/formview'
   Templates = require 'vtdendro/templates'
   Models = require 'vtdendro/models'
@@ -55,26 +56,21 @@ define (require, exports, module) ->
   class MainVtdendroView extends Backbone.Marionette.ItemView
     template: Templates.main_vtdendro_view
 
-  class ShowPageView extends Backbone.Marionette.ItemView
-    template: Templates.page_view
-
-
-  class SimpleBlogPostView extends Backbone.Marionette.ItemView
-    template: Templates.simple_post_view
-    #className: 'col-sm-10'
-    className: 'post'
-
   class SearchVTSpeciesView extends FormView
+    fields: ['cname', 'form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
     template: Templates.search_vtspecies_form
-    ui:
-      cname: '[name="cname"]'
-      form: '[name="form"]'
-
+    ui: () ->
+      data = {}
+      for field in @fields
+        #data[field] = '[name="' + field + '"]'
+        data[field] = "[name=\"#{field}\"]"
+      return data
+      
     createModel: ->
       new Backbone.Model url: null
 
     updateModel: ->
-      for field in ['cname', 'form']
+      for field in @fields
         value = @ui[field].val()
         if value
           @model.set field, value
@@ -83,7 +79,21 @@ define (require, exports, module) ->
 
     saveModel: ->
       console.log "calling save model, do something here"
-      console.log "model is", @model
+      console.log "model is", @model, @ui
+      urlbase = '#vtdendro/vtshowsearch?'
+      queryString = qs.stringify @model.attributes
+      url = urlbase + queryString
+      foobar =
+        parameters: @model.attributes
+      fbqs = qs.stringify foobar
+      fburl = urlbase + fbqs
+      console.log 'foobar url', fburl
+      navigate_to_url url
+        
+        
+        
+      
+      
       
       
     

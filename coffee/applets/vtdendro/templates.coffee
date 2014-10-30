@@ -26,7 +26,9 @@ define (require, exports, module) ->
   } = teacup
             
   { form_group_input_div } = require 'common/templates'
-    
+
+  { capitalize } = require 'common/util'
+  
   ########################################
   # Templates
   ########################################
@@ -66,7 +68,7 @@ define (require, exports, module) ->
 
   simple_genus_info = renderable (genus) ->
     div '.genus.listview-list-entry', ->
-      a href:"#vtdendro/viewgenus/#{genus.name}?genus_id=#{genus.id}", genus.name
+      a href:"#vtdendro/viewgenus/#{genus.name}", genus.name
 
   simple_vtspecies_info = renderable (species) ->
     div '.species.listview-list-entry', ->
@@ -80,7 +82,15 @@ define (require, exports, module) ->
   vtspecies_full_view = renderable (spec) ->
     window.spec = spec
     div '.listview-header', spec.cname
-    div '.listview-list-entry', "#{spec.genus} #{spec.species}"
+    div '.listview-list-entry', ->
+      a href: "#vtdendro/viewgenus/#{spec.genus}", "#{spec.genus} #{spec.species}"
+    if spec.looklikes.length
+      div '.listview-list-entry', ->
+        span 'Looks like:'
+        for looklike in spec.looklikes
+          span '.btn.btn-default.btn-xs', ->
+            a href:"#vtdendro/viewvtspecies/#{looklike.id}", looklike.cname
+        
     table ->
       for field in ['form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
         if field of spec
@@ -99,6 +109,8 @@ define (require, exports, module) ->
         tr ->
           td ->
             text "No map available for #{spec.cname}"
+      div ->
+        raw spec.wikipage.content
 
   search_vtspecies_form = renderable (params) ->
     form_group_input_div
@@ -108,13 +120,14 @@ define (require, exports, module) ->
         name: 'cname'
         placeholder: ''
         value: params.cname
-    form_group_input_div
-      input_id: 'input_form'
-      label: 'Form'
-      input_attributes:
-        name: 'form'
-        placeholder: ''
-        value: params.form
+    for field in ['form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
+      form_group_input_div
+        input_id: "input_#{field}"
+        label: capitalize field
+        input_attributes:
+          name: field
+          placeholder: ''
+          value: params[field]
     input '.btn.btn-default.btn-xs', type:'submit', value:'HelloThere'
         
             

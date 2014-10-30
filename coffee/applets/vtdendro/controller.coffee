@@ -2,6 +2,8 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  require 'qs'
+  
   MainBus = require 'msgbus'
 
   Views = require 'vtdendro/views'
@@ -90,18 +92,30 @@ define (require, exports, module) ->
         @App.content.show view
         Util.scroll_top_fast()
 
-    view_genus: (name, genus_id) ->
+    view_genus: (name) ->
       @make_sidebar()
       console.log "name", name
-      console.log "genus_id", genus_id
-      
-      vlist = AppBus.reqres.request 'make_vtgenus_collection', genus_id
+      vlist = AppBus.reqres.request 'make_vtgenus_collection', name
       response = vlist.fetch()
       response.done =>
         view = new Views.SimpleVTSpeciesListView
           collection: vlist
         @App.content.show view
         Util.scroll_top_fast()
+
+    show_search_results: (queryString) ->
+      @make_sidebar()
+      params = qs.parse queryString
+      vlist = AppBus.reqres.request 'make_vtsearch_collection', params
+      response = vlist.fetch()
+      response.done =>
+        view = new Views.SimpleVTSpeciesListView
+          collection: vlist
+        @App.content.show view
+        Util.scroll_top_fast()
+      
+      
+      
 
     view_vtspecies: (id) ->
       @make_sidebar()
