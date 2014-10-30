@@ -110,7 +110,7 @@ define (require, exports, module) ->
           td ->
             text "No map available for #{spec.cname}"
       div ->
-        raw spec.wikipage.content
+        raw spec.wikipage
 
   search_vtspecies_form = renderable (params) ->
     form_group_input_div
