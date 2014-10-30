@@ -66,7 +66,7 @@ define (require, exports, module) ->
 
   simple_genus_info = renderable (genus) ->
     div '.genus.listview-list-entry', ->
-      a href:"#vtdendro/viewgenus/#{genus.name}", genus.name
+      a href:"#vtdendro/viewgenus/#{genus.name}?genus_id=#{genus.id}", genus.name
 
   simple_vtspecies_info = renderable (species) ->
     div '.species.listview-list-entry', ->
@@ -83,13 +83,42 @@ define (require, exports, module) ->
     div '.listview-list-entry', "#{spec.genus} #{spec.species}"
     table ->
       for field in ['form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
-        tr '.listview-list-entry',  ->
+        if field of spec
+          tr '.listview-list-entry',  ->
+            td ->
+              if field of spec.pictures
+                img src:"#{spec.pictures[field].localurl}", width:100,
+            td ->
+              strong "#{field}:  "
+              text spec[field]
+      if spec.pictures and 'map' of spec.pictures
+        tr ->
           td ->
-            strong "#{field}"
-            text spec[field]
+            img src:"#{spec.pictures.map.localurl}"
+      else
+        tr ->
           td ->
-            img src:"#{spec.pictures[field].localurl}"
-      
+            text "No map available for #{spec.cname}"
+
+  search_vtspecies_form = renderable (params) ->
+    form_group_input_div
+      input_id: 'input_cname'
+      label: 'Common Name'
+      input_attributes:
+        name: 'cname'
+        placeholder: ''
+        value: params.cname
+    form_group_input_div
+      input_id: 'input_form'
+      label: 'Form'
+      input_attributes:
+        name: 'form'
+        placeholder: ''
+        value: params.form
+    input '.btn.btn-default.btn-xs', type:'submit', value:'HelloThere'
+        
+            
+          
   simple_post_view = renderable (post) ->
     div '.listview-list-entry', ->
       #p ->
@@ -117,4 +146,5 @@ define (require, exports, module) ->
     simple_vtspecies_list: simple_vtspecies_list
     simple_vtspecies_info: simple_vtspecies_info
     vtspecies_full_view: vtspecies_full_view
+    search_vtspecies_form: search_vtspecies_form
     

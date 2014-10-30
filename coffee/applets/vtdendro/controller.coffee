@@ -25,6 +25,10 @@ define (require, exports, module) ->
         name: 'VTSpecies List'
         url: '#vtdendro/vtspecieslist'
       }
+      {
+        name: 'Search Me'
+        url: '#vtdendro/vtsearch'
+      }
       ]
 
   class Controller extends SideBarController
@@ -56,7 +60,12 @@ define (require, exports, module) ->
       @App.content.show view
       Util.scroll_top_fast()
       
-
+    search_vtspecies: () ->
+      @make_sidebar()
+      view = new Views.SearchVTSpeciesView
+      @App.content.show view
+      Util.scroll_top_fast()
+      
     genus_list: () ->
       #console.log 'genus_list called'
       @make_sidebar()
@@ -81,13 +90,30 @@ define (require, exports, module) ->
         @App.content.show view
         Util.scroll_top_fast()
 
-    view_vtspecies: (id) ->
+    view_genus: (name, genus_id) ->
       @make_sidebar()
-      vlist = AppBus.reqres.request 'get_vtspecies_collection'
+      console.log "name", name
+      console.log "genus_id", genus_id
+      
+      vlist = AppBus.reqres.request 'make_vtgenus_collection', genus_id
       response = vlist.fetch()
       response.done =>
-        window.vlist = vlist
-        spec = vlist.get id
+        view = new Views.SimpleVTSpeciesListView
+          collection: vlist
+        @App.content.show view
+        Util.scroll_top_fast()
+
+    view_vtspecies: (id) ->
+      @make_sidebar()
+      console.log 'view_vtspecies id', id
+      vlist = AppBus.reqres.request 'get_vtspecies_collection'
+      specmodel = new Models.VTSpecies
+      specmodel.id = id
+      response = specmodel.fetch()
+      response.done =>
+        window.specmodel = specmodel
+        console.log "response.done id", id
+        spec = specmodel
         view = new Views.VTSpecView
           model: spec
         @App.content.show view

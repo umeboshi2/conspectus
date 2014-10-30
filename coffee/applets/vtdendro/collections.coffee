@@ -36,19 +36,32 @@ define (require, exports, module) ->
     #window.genuscollection = genus_collection
     genus_collection
 
-  class VTSpeciesCollection extends OffsetLimitCollection
-    url: '/rest/v0/main/vtspecies'
+  class BaseVTSpeciesCollection extends OffsetLimitCollection
     state:
       firstPage: 0
       pageSize: 30
+      
+
+  class MainVTSpeciesCollection extends BaseVTSpeciesCollection
+    url: '/rest/v0/main/vtspecies'
+
+  class VTGenusCollection extends BaseVTSpeciesCollection
+    url: () ->
+      "/rest/v0/main/vtspecies?genus_id=#{@genus_id}"
+      
     
   genus_collection = new GenusCollection
-  vtspecies_collection = new VTSpeciesCollection
+  vtspecies_collection = new MainVTSpeciesCollection
   AppBus.reqres.setHandler 'get_vtspecies_collection', ->
     #window.genuscollection = genus_collection
     vtspecies_collection
 
+  AppBus.reqres.setHandler 'make_vtgenus_collection', (genus_id) ->
+    c = new VTGenusCollection
+    c.genus_id = genus_id
+    return c
     
   module.exports =
     GenusCollection: GenusCollection
+    VTGenusCollection: VTGenusCollection
     

@@ -20,7 +20,12 @@ define (require, exports, module) ->
   class BlogInfo extends BaseTumblrModel
     url: () ->
       "#{@baseURL}/blog/#{@id}/info?api_key=#{@api_key}&callback=?"
+
+  class VTSpecies extends Backbone.Model
+    url: () ->
+      "/rest/v0/main/vtspecies/#{@id}"
       
   module.exports =
     BlogInfo: BlogInfo
+    VTSpecies: VTSpecies
     

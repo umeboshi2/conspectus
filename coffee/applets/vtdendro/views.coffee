@@ -51,8 +51,6 @@ define (require, exports, module) ->
 
   class VTSpecView extends Backbone.Marionette.ItemView
     template: Templates.vtspecies_full_view
-    
-
 
   class MainVtdendroView extends Backbone.Marionette.ItemView
     template: Templates.main_vtdendro_view
@@ -65,7 +63,29 @@ define (require, exports, module) ->
     template: Templates.simple_post_view
     #className: 'col-sm-10'
     className: 'post'
-    
+
+  class SearchVTSpeciesView extends FormView
+    template: Templates.search_vtspecies_form
+    ui:
+      cname: '[name="cname"]'
+      form: '[name="form"]'
+
+    createModel: ->
+      new Backbone.Model url: null
+
+    updateModel: ->
+      for field in ['cname', 'form']
+        value = @ui[field].val()
+        if value
+          @model.set field, value
+          console.log 'set', field, value
+      console.log "model", @model
+
+    saveModel: ->
+      console.log "calling save model, do something here"
+      console.log "model is", @model
+      
+      
     
   module.exports =
     SideBarView: SideBarView
@@ -74,5 +94,6 @@ define (require, exports, module) ->
     SimpleGenusListView: SimpleGenusListView
     SimpleVTSpeciesListView: SimpleVTSpeciesListView
     VTSpecView: VTSpecView
+    SearchVTSpeciesView: SearchVTSpeciesView
     
     
