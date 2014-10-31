@@ -118,7 +118,18 @@ define (require, exports, module) ->
           collection: vlist
         @App.content.show view
         Util.scroll_top_fast()
-      
+
+    view_wikipage: (name) ->
+      @make_sidebar()
+      wpage = new Models.WikiPage
+      wpage.name = name
+      response = wpage.fetch()
+      response.done =>
+        view = new Views.WikiPageView
+          model: wpage
+        @App.content.show view
+        Util.scroll_top_fast()
+        
       
       
 

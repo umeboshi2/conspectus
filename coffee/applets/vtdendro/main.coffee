@@ -24,6 +24,8 @@ define (require, exports, module) ->
       'vtdendro/viewvtspecies/:id': 'view_vtspecies'
       'vtdendro/vtsearch': 'search_vtspecies'
       'vtdendro/vtshowsearch?*queryString' : 'show_search_results'
+      'vtdendro/wikipage/:name': 'view_wikipage'
+      
       
       
     

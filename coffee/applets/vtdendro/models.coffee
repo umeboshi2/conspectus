@@ -28,9 +28,14 @@ define (require, exports, module) ->
   class Genus extends Backbone.Model
     url: () ->
       "/rest/v0/main/genus/#{@genus}"
+
+  class WikiPage extends Backbone.Model
+    url: () ->
+      "/rest/v0/main/wikipage/#{@name}"
       
   module.exports =
     BlogInfo: BlogInfo
     VTSpecies: VTSpecies
     Genus: Genus
+    WikiPage: WikiPage
     

@@ -66,6 +66,9 @@ define (require, exports, module) ->
   class MainVtdendroView extends Backbone.Marionette.ItemView
     template: Templates.main_vtdendro_view
 
+  class WikiPageView extends Backbone.Marionette.ItemView
+    template: Templates.wikipage_view
+    
   class SearchVTSpeciesView extends FormView
     fields: ['cname', 'form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
     template: Templates.search_vtspecies_form
@@ -116,5 +119,5 @@ define (require, exports, module) ->
     VTSpecView: VTSpecView
     SearchVTSpeciesView: SearchVTSpeciesView
     VTSpeciesGenusListView: VTSpeciesGenusListView
-    
+    WikiPageView: WikiPageView
     

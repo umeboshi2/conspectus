@@ -84,9 +84,13 @@ define (require, exports, module) ->
     div '.listview-header', "Genus: #{genus.name}"
     div ->
       div '#speclist-container.listview-list'
-      div ->
+      div '.listview-list-entry', ->
         raw genus.wikipage
 
+  wikipage_view = renderable (wikipage) ->
+    div '.listview-list-entry', ->
+      raw wikipage.content
+      
   vtspecies_full_view = renderable (spec) ->
     window.spec = spec
     div '.listview-header', spec.cname
@@ -110,14 +114,18 @@ define (require, exports, module) ->
               strong "#{field}:  "
               text spec[field]
       if spec.pictures and 'map' of spec.pictures
-        tr ->
-          td ->
+        tr '.listview-list-entry', ->
+          td colspan:2, ->
             img src:"#{spec.pictures.map.localurl}"
       else
-        tr ->
+        tr '.listview-list-entry', ->
           td ->
             text "No map available for #{spec.cname}"
-      div ->
+      tr '.listview-header', ->
+        td colspan:2, ->
+          text 'Wikipedia'
+      tr '.listview-list-entry', ->
+       td colspan:2, ->
         raw spec.wikipage
 
   search_vtspecies_form = renderable (params) ->
@@ -169,4 +177,5 @@ define (require, exports, module) ->
     vtspecies_full_view: vtspecies_full_view
     search_vtspecies_form: search_vtspecies_form
     vtspecies_genus_list: vtspecies_genus_list
+    wikipage_view: wikipage_view
     
