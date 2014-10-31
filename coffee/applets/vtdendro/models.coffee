@@ -24,8 +24,13 @@ define (require, exports, module) ->
   class VTSpecies extends Backbone.Model
     url: () ->
       "/rest/v0/main/vtspecies/#{@id}"
+
+  class Genus extends Backbone.Model
+    url: () ->
+      "/rest/v0/main/genus/#{@genus}"
       
   module.exports =
     BlogInfo: BlogInfo
     VTSpecies: VTSpecies
+    Genus: Genus
     

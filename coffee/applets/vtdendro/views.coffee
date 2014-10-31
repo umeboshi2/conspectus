@@ -50,6 +50,16 @@ define (require, exports, module) ->
       next_page_button: '#next-page-button'
       prev_page_button: '#prev-page-button'
 
+  class VTSpeciesGenusListView extends PageableView
+    childView: SimpleVTSpeciesInfoView
+    template: Templates.vtspecies_genus_list
+    childViewContainer: '#speclist-container'
+    itemSelector: '.species'
+    ui:
+      container: '#speclist-container'
+      next_page_button: '#next-page-button'
+      prev_page_button: '#prev-page-button'
+
   class VTSpecView extends Backbone.Marionette.ItemView
     template: Templates.vtspecies_full_view
 
@@ -105,5 +115,6 @@ define (require, exports, module) ->
     SimpleVTSpeciesListView: SimpleVTSpeciesListView
     VTSpecView: VTSpecView
     SearchVTSpeciesView: SearchVTSpeciesView
+    VTSpeciesGenusListView: VTSpeciesGenusListView
     
     

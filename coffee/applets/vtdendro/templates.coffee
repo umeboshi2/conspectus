@@ -79,6 +79,14 @@ define (require, exports, module) ->
     div ->
       div '#speclist-container.listview-list'
 
+  vtspecies_genus_list = renderable (genus) ->
+    simple_toolbar()
+    div '.listview-header', "Genus: #{genus.name}"
+    div ->
+      div '#speclist-container.listview-list'
+      div ->
+        raw genus.wikipage
+
   vtspecies_full_view = renderable (spec) ->
     window.spec = spec
     div '.listview-header', spec.cname
@@ -160,4 +168,5 @@ define (require, exports, module) ->
     simple_vtspecies_info: simple_vtspecies_info
     vtspecies_full_view: vtspecies_full_view
     search_vtspecies_form: search_vtspecies_form
+    vtspecies_genus_list: vtspecies_genus_list
     

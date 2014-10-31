@@ -98,10 +98,15 @@ define (require, exports, module) ->
       vlist = AppBus.reqres.request 'make_vtgenus_collection', name
       response = vlist.fetch()
       response.done =>
-        view = new Views.SimpleVTSpeciesListView
-          collection: vlist
-        @App.content.show view
-        Util.scroll_top_fast()
+        genus = new Models.Genus
+        genus.genus = name
+        gresponse = genus.fetch()
+        gresponse.done =>
+          view = new Views.VTSpeciesGenusListView
+            collection: vlist
+            model: genus
+          @App.content.show view
+          Util.scroll_top_fast()
 
     show_search_results: (queryString) ->
       @make_sidebar()
