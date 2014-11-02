@@ -49,6 +49,7 @@ define (require, exports, module) ->
       container: '#speclist-container'
       next_page_button: '#next-page-button'
       prev_page_button: '#prev-page-button'
+      total_records: '#total-records'
 
   class VTSpeciesGenusListView extends PageableView
     childView: SimpleVTSpeciesInfoView
@@ -59,7 +60,8 @@ define (require, exports, module) ->
       container: '#speclist-container'
       next_page_button: '#next-page-button'
       prev_page_button: '#prev-page-button'
-
+      total_records: '#total-records'
+      
   class VTSpecView extends Backbone.Marionette.ItemView
     template: Templates.vtspecies_full_view
 
@@ -96,11 +98,6 @@ define (require, exports, module) ->
       urlbase = '#vtdendro/vtshowsearch?'
       queryString = qs.stringify @model.attributes
       url = urlbase + queryString
-      foobar =
-        parameters: @model.attributes
-      fbqs = qs.stringify foobar
-      fburl = urlbase + fbqs
-      console.log 'foobar url', fburl
       navigate_to_url url
         
         

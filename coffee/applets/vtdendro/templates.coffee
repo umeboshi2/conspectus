@@ -76,12 +76,19 @@ define (require, exports, module) ->
 
   simple_vtspecies_list = renderable () ->
     simple_toolbar()
+    div '#total-records'
     div ->
       div '#speclist-container.listview-list'
 
   vtspecies_genus_list = renderable (genus) ->
     simple_toolbar()
-    div '.listview-header', "Genus: #{genus.name}"
+    div '.listview-header', ->
+      text "Genus: #{genus.name}"
+      span ->
+        raw "&nbsp;("
+      span '#total-records', ->
+        text 'total'
+      raw ")"
     div ->
       div '#speclist-container.listview-list'
       div '.listview-list-entry', ->
