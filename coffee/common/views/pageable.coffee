@@ -16,6 +16,7 @@ define (require, exports, module) ->
         itemSelector: @itemSelector || '.item'
         columnWidth: @columnWidth || 100
       @set_layout()
+      @ui.total_records?.text "#{@collection.state.totalRecords} results"
 
     set_layout: ->
       @ui.container.show()
