@@ -32,35 +32,26 @@ define (require, exports, module) ->
     template: Templates.simple_genus_list
     childViewContainer: '#genuslist-container'
     itemSelector: '.genus'
-    ui:
-      container: '#genuslist-container'
-      next_page_button: '#next-page-button'
-      prev_page_button: '#prev-page-button'
+    ui: () ->
+      super
+        container: '#genuslist-container'
 
   class SimpleVTSpeciesInfoView extends Backbone.Marionette.ItemView
     template: Templates.simple_vtspecies_info
-    
-  class SimpleVTSpeciesListView extends PageableView
-    childView: SimpleVTSpeciesInfoView
-    template: Templates.simple_vtspecies_list
-    childViewContainer: '#speclist-container'
-    itemSelector: '.species'
-    ui:
-      container: '#speclist-container'
-      next_page_button: '#next-page-button'
-      prev_page_button: '#prev-page-button'
-      total_records: '#total-records'
 
-  class VTSpeciesGenusListView extends PageableView
+  class BaseVTSpeciesListView extends PageableView
     childView: SimpleVTSpeciesInfoView
-    template: Templates.vtspecies_genus_list
     childViewContainer: '#speclist-container'
     itemSelector: '.species'
-    ui:
-      container: '#speclist-container'
-      next_page_button: '#next-page-button'
-      prev_page_button: '#prev-page-button'
-      total_records: '#total-records'
+    ui: () ->
+      super
+        container: '#speclist-container'
+        
+  class SimpleVTSpeciesListView extends BaseVTSpeciesListView
+    template: Templates.simple_vtspecies_list
+
+  class VTSpeciesGenusListView extends BaseVTSpeciesListView
+    template: Templates.vtspecies_genus_list
       
   class VTSpecView extends Backbone.Marionette.ItemView
     template: Templates.vtspecies_full_view
