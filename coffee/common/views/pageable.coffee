@@ -57,16 +57,19 @@ define (require, exports, module) ->
         @ui.next_page_button.hide()
         
 
+    _update_hashtable: (hashtable, basehash) ->
+      hashtable = if hashtable then hashtable else {}
+      for key of basehash
+        if key not of hashtable
+          hashtable[key] = basehash[key]
+      return hashtable
+      
     _base_events:
       'click @ui.next_page_button': 'get_next_page'
       'click @ui.prev_page_button': 'get_prev_page'
-    
+      
     events: (eventhash) ->
-      eventhash = if eventhash then eventhash else {}
-      for key of @_base_events
-        if key not of eventhash
-          eventhash[key] = @_base_events[key]
-      return eventhash
+      @_update_hashtable eventhash, @_base_events
 
     _baseui:
       next_page_button: '#next-page-button'
@@ -74,11 +77,7 @@ define (require, exports, module) ->
       total_records: '#total-records'
 
     ui: (uihash) ->
-      uihash = if uihash then uihash else {}
-      for key of @_baseui
-        if key not of uihash
-          uihash[key] = @_baseui[key]
-      return uihash
+      @_update_hashtable uihash, @_baseui
       
     get_another_page: (direction) ->
       @ui.container.hide()
