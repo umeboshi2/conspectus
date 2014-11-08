@@ -53,16 +53,18 @@ define (require, exports, module) ->
       button '#modal-cancel-button.btn', 'cancel'
       button '#modal-ok-button.btn.btn-default', 'Ok'
 
-  simple_toolbar = renderable () ->
+  simple_toolbar = renderable (state) ->
     div '.mytoolbar.row', ->
       ul '.pager', ->
         li '.previous', ->
           icon '#prev-page-button.fa.fa-arrow-left.btn.btn-default'
         li '.next', ->
           icon '#next-page-button.fa.fa-arrow-right.btn.btn-default'
-    
-  simple_genus_list = renderable () ->
-    simple_toolbar()
+        li '.total-records', "Total: #{state?.totalRecords}"
+        li '.page-number', "Page #{state?.currentPage}"
+        
+  simple_genus_list = renderable (state) ->
+    simple_toolbar(state)
     div ->
       div '#genuslist-container.listview-list'
 
@@ -80,10 +82,10 @@ define (require, exports, module) ->
     div ->
       div '#speclist-container.listview-list'
 
-  vtspecies_genus_list = renderable (genus) ->
+  vtspecies_genus_list = renderable (state) ->
     simple_toolbar()
     div '.listview-header', ->
-      text "Genus: #{genus.name}"
+      text "Genus: #{state.genus.name}"
       span ->
         raw "&nbsp;("
       span '#total-records', ->
@@ -92,8 +94,20 @@ define (require, exports, module) ->
     div ->
       div '#speclist-container.listview-list'
       div '.listview-list-entry', ->
-        raw genus.wikipage
+        raw state.genus.wikipage
 
+  simple_wikipage_info = renderable (model) ->
+    div '.wikipage.listview-list-entry', ->
+      a href:"#vtdendro/wikipage/#{model.name}", model.name
+
+  wikipage_list = renderable () ->
+    simple_toolbar()
+    div '#total-records'
+    div ->
+      div '#wikipage-container.listview-list'
+
+    
+      
   wikipage_view = renderable (wikipage) ->
     div '.listview-list-entry', ->
       raw wikipage.content
@@ -185,4 +199,6 @@ define (require, exports, module) ->
     search_vtspecies_form: search_vtspecies_form
     vtspecies_genus_list: vtspecies_genus_list
     wikipage_view: wikipage_view
+    simple_wikipage_info: simple_wikipage_info
+    wikipage_list: wikipage_list
     

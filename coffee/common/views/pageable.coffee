@@ -32,7 +32,6 @@ define (require, exports, module) ->
         itemSelector: @itemSelector || '.item'
         columnWidth: @columnWidth || 100
       @set_layout()
-      @ui.total_records?.text "#{@collection.state.totalRecords} results"
 
     onBeforeDestroy: () ->
       #console.log "Remove @keydownHandler" + @keydownHandler
@@ -42,6 +41,9 @@ define (require, exports, module) ->
       @ui.container.show()
       @masonry.reloadItems()
       @masonry.layout()
+      @ui.total_records?.text "#{@collection.state.totalRecords} results"
+      @ui.pagenumber?.text "Page #{@collection.state.currentPage}"
+      
       @set_pagination_buttons()
       
     set_pagination_buttons: ->

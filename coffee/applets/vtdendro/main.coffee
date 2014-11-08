@@ -25,6 +25,7 @@ define (require, exports, module) ->
       'vtdendro/vtsearch': 'search_vtspecies'
       'vtdendro/vtshowsearch?*queryString' : 'show_search_results'
       'vtdendro/wikipage/:name': 'view_wikipage'
+      'vtdendro/wikipagelist': 'list_wikipages'
       
       
       

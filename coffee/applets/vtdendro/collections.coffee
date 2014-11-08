@@ -64,6 +64,12 @@ define (require, exports, module) ->
     c.searchParams = params
     return c
           
+  class WikiPageCollection extends BaseCollection
+    url: '/rest/v0/main/wikipage'
+
+  wikipage_collection = new WikiPageCollection
+  AppBus.reqres.setHandler 'get_wikipage_collection', ->
+    wikipage_collection
     
   module.exports =
     GenusCollection: GenusCollection

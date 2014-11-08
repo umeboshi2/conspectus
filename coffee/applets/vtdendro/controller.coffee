@@ -31,6 +31,10 @@ define (require, exports, module) ->
         name: 'Search Me'
         url: '#vtdendro/vtsearch'
       }
+      {
+        name: 'WikiPages'
+        url: '#vtdendro/wikipagelist'
+      }
       ]
 
   class Controller extends SideBarController
@@ -78,9 +82,21 @@ define (require, exports, module) ->
         #console.log "response.done for glist"
         view = new Views.SimpleGenusListView
           collection: glist
+          model: new Backbone.Model glist.state
         @App.content.show view
         Util.scroll_top_fast()
-
+        window.gview = view
+        
+    list_wikipages: () ->
+      @make_sidebar()
+      wlist = AppBus.reqres.request 'get_wikipage_collection'
+      response = wlist.fetch()
+      response.done =>
+        view = new Views.WikiPageListView
+          collection: wlist
+        @App.content.show view
+        Util.scroll_top_fast()
+        
     
     vtspecies_list: () ->
       @make_sidebar()
@@ -98,13 +114,13 @@ define (require, exports, module) ->
       vlist = AppBus.reqres.request 'make_vtgenus_collection', name
       response = vlist.fetch()
       response.done =>
-        genus = new Models.Genus
-        genus.genus = name
-        gresponse = genus.fetch()
+        vlist.state.genus = new Models.Genus
+        vlist.state.genus.genus = name
+        gresponse = vlist.state.genus.fetch()
         gresponse.done =>
           view = new Views.VTSpeciesGenusListView
             collection: vlist
-            model: genus
+            model: new Backbone.Model vlist.state
           @App.content.show view
           Util.scroll_top_fast()
 

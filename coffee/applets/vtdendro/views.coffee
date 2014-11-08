@@ -35,7 +35,8 @@ define (require, exports, module) ->
     ui: () ->
       super
         container: '#genuslist-container'
-
+        pagenumber: '.page-number'
+        
   class SimpleVTSpeciesInfoView extends Backbone.Marionette.ItemView
     template: Templates.simple_vtspecies_info
 
@@ -45,14 +46,14 @@ define (require, exports, module) ->
     itemSelector: '.species'
     ui: () ->
       super
-        container: '#speclist-container'
+        container: @childViewContainer
         
   class SimpleVTSpeciesListView extends BaseVTSpeciesListView
     template: Templates.simple_vtspecies_list
 
   class VTSpeciesGenusListView extends BaseVTSpeciesListView
     template: Templates.vtspecies_genus_list
-      
+
   class VTSpecView extends Backbone.Marionette.ItemView
     template: Templates.vtspecies_full_view
 
@@ -61,6 +62,18 @@ define (require, exports, module) ->
 
   class WikiPageView extends Backbone.Marionette.ItemView
     template: Templates.wikipage_view
+
+  class WikiPageInfoView extends Backbone.Marionette.ItemView
+    template: Templates.simple_wikipage_info
+
+  class WikiPageListView extends PageableView
+    childView: WikiPageInfoView
+    childViewContainer: '#wikipage-container'
+    itemSelector: '.wikipage'
+    template: Templates.wikipage_list
+    ui: () ->
+      super
+        container: @childViewContainer
     
   class SearchVTSpeciesView extends FormView
     fields: ['cname', 'form', 'leaf', 'bark', 'fruit', 'flower', 'twig']
@@ -108,4 +121,5 @@ define (require, exports, module) ->
     SearchVTSpeciesView: SearchVTSpeciesView
     VTSpeciesGenusListView: VTSpeciesGenusListView
     WikiPageView: WikiPageView
+    WikiPageListView: WikiPageListView
     
