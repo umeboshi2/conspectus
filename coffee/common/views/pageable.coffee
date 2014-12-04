@@ -67,16 +67,22 @@ define (require, exports, module) ->
       return hashtable
       
     _base_events:
+      'click @ui.first_page_button': 'get_first_page'
       'click @ui.next_page_button': 'get_next_page'
       'click @ui.prev_page_button': 'get_prev_page'
+      'click @ui.last_page_button': 'get_last_page'
       
     events: (eventhash) ->
       @_update_hashtable eventhash, @_base_events
 
     _baseui:
-      next_page_button: '#next-page-button'
+      first_page_button: '#first-page-button'
       prev_page_button: '#prev-page-button'
+      next_page_button: '#next-page-button'
+      last_page_button: '#last-page-button'
       total_records: '#total-records'
+      total_pages: '#total-pages'
+      pagenumber: '#page-number'
 
     ui: (uihash) ->
       @_update_hashtable uihash, @_baseui
@@ -84,18 +90,28 @@ define (require, exports, module) ->
     get_another_page: (direction) ->
       @ui.container.hide()
       switch direction
+        when 'first' then response = @collection.getFirstPage()
         when 'prev' then response = @collection.getPreviousPage()
         when 'next' then response = @collection.getNextPage()
+        when 'last' then response = @collection.getLastPage()
         else response = null
       if response
         response.done =>
           @set_layout()
 
+    get_first_page: () ->
+      @get_another_page 'first'
+      
     get_next_page: () ->
       @get_another_page 'next'
 
     get_prev_page: () ->
       @get_another_page 'prev'
+
+    get_last_page: () ->
+      @get_another_page 'last'
+      
+    
       
   module.exports = PageableView
   
