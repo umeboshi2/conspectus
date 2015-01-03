@@ -26,7 +26,7 @@ build-nodejs-package:
     - unless: test -x /usr/bin/npm
     - source: salt://files/build-nodejs.sh
     - env:
-      - NODE_VERSION: ${pillar['node_version']}
+      - NODE_VERSION: {{ salt.pillar.get('node_version') }}
 
 nodejs:
   pkg.installed:
@@ -34,11 +34,11 @@ nodejs:
       - cmd: build-nodejs-package
 
 
-%for pkg in ['coffee-script', 'grunt-cli', 'bower', 'http-server', 'js2coffee']:
+{% for pkg in ['coffee-script', 'grunt-cli', 'bower', 'http-server', 'js2coffee']: %}
 
-npm-${pkg}:
+npm-{{ pkg }}:
   npm.installed:
     - require:
       - pkg: nodejs
-    - name: ${pkg}
-%endfor
+    - name: {{ pkg }}
+{% endfor %}

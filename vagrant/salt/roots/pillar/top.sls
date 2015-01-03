@@ -1,3 +1,4 @@
+# -*- mode: yaml -*-
 base:
   '*':
     - base
