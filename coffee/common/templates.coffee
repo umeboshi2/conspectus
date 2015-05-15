@@ -2,45 +2,26 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-  teacup = require 'teacup'
-  marked = require 'marked'
-  
-  renderable = teacup.renderable
+  tc = require 'teacup'
 
-  div = teacup.div
-  # I use "icon" for font-awesome
-  icon = teacup.i
-  strong = teacup.strong
-  span = teacup.span
-  label = teacup.label
-  input = teacup.input
-
-  raw = teacup.raw
-  text = teacup.text
 
   # Main Templates must use teacup.
   # The template must be a teacup.renderable, 
   # and accept a layout model as an argument.
-
-  # Tagnames to be used in the template.
-  {div, span, link, text, strong, label, input, 
-  button, a, nav, form, small, section, 
-  ul, li, b, h1, h2, aside, p,
-  header} = teacup
-
+  
   ########################################
   # Templates
   ########################################
-  form_group_input_div = renderable (data) ->
-    div '.form-group', ->
-      label '.control-label',
+  form_group_input_div = tc.renderable (data) ->
+    tc.div '.form-group', ->
+      tc.label '.control-label',
         for:data.input_id
         data.label
-      input_type = if data?.input_type then data.input_type else input
+      input_type = if data?.input_type then data.input_type else tc.input
       input_type "##{data.input_id}.form-control", data.input_attributes
           
-  login_form = renderable (user) ->
-    form
+  login_form = tc.renderable (user) ->
+    tc.form
       role:'form'
       method: 'POST'
       action: '/login', ->
@@ -57,26 +38,26 @@ define (require, exports, module) ->
             name: 'password'
             type: 'password'
             placeholder: 'Type your password here....'
-        button '.btn.btn-default', type:'submit', 'login'
+        tc.button '.btn.btn-default', type:'submit', 'login'
         
   ########################################
-  user_menu = renderable (user) ->
+  user_menu = tc.renderable (user) ->
     name = user.username
-    ul '#user-menu.ctx-menu.nav.navbar-nav', ->
-      li '.dropdown', ->
-        a '.dropdown-toggle', dataToggle:'dropdown', ->
+    tc.ul '#user-menu.ctx-menu.nav.navbar-nav', ->
+      tc.li '.dropdown', ->
+        tc.a '.dropdown-toggle', dataToggle:'dropdown', ->
           if name == undefined
-            text "Guest"
+            tc.text "Guest"
           else
-            text name
-          b '.caret'
-        ul '.dropdown-menu', ->
+            tc.text name
+          tc.b '.caret'
+        tc.ul '.dropdown-menu', ->
           if name == undefined
-            li ->
-              a href:'/login', 'login'
+            tc.li ->
+              tc.a href:'/login', 'login'
           else
-            li ->
-              a href:'/app/user', 'User Page'
+            tc.li ->
+              tc.a href:'/app/user', 'User Page'
             # we need a "get user info" from server
             # to populate this menu with 'admin' link
             # FIXME use "?." to help here
@@ -88,64 +69,64 @@ define (require, exports, module) ->
                   if g.name == 'admin'
                     admin = true
             if admin
-              li ->
+              tc.li ->
                 href = '/admin'
                 pathname = window.location.pathname
                 if pathname.split(href)[0] == ''
                   href = '#'
-                a href:href, 'Administer Site'
-            li ->
-              a href:'/logout', 'Logout'
+                tc.a href:href, 'Administer Site'
+            tc.li ->
+              tc.a href:'/logout', 'Logout'
 
   ########################################
-  BootstrapNavBarTemplate = renderable (appmodel) ->
-    div '.container', ->
-      div '#navbar-brand.navbar-header', ->
-        button '.navbar-toggle', type:'button', dataToggle:'collapse',
+  BootstrapNavBarTemplate = tc.renderable (appmodel) ->
+    tc.div '.container', ->
+      tc.div '#navbar-brand.navbar-header', ->
+        tc.button '.navbar-toggle', type:'button', dataToggle:'collapse',
         dataTarget:'.navbar-collapse', ->
-          span '.sr-only', 'Toggle Navigation'
-          span '.icon-bar'
-          span '.icon-bar'
-          span '.icon-bar'
-        a '.navbar-brand', href:appmodel.brand.url, appmodel.brand.name
-      div '.navbar-collapse.collapse', ->
-        ul '#app-navbar.nav.navbar-nav', ->
+          tc.span '.sr-only', 'Toggle Navigation'
+          tc.span '.icon-bar'
+          tc.span '.icon-bar'
+          tc.span '.icon-bar'
+        tc.a '.navbar-brand', href:appmodel.brand.url, appmodel.brand.name
+      tc.div '.navbar-collapse.collapse', ->
+        tc.ul '#app-navbar.nav.navbar-nav', ->
           for app in appmodel.apps
-            li appname:app.appname, ->
-              a href:app.url, app.name
-        ul '#main-menu.nav.navbar-nav.navbar-left'
-        ul '#user-menu.nav.navbar-nav.navbar-right'
+            tc.li appname:app.appname, ->
+              tc.a href:app.url, app.name
+        tc.ul '#main-menu.nav.navbar-nav.navbar-left'
+        tc.ul '#user-menu.nav.navbar-nav.navbar-right'
               
 
   ########################################
-  BootstrapLayoutTemplate = renderable () ->
-    div '#modal'
-    div '#main-navbar.navbar.navbar-default.navbar-fixed-top',
+  BootstrapLayoutTemplate = tc.renderable () ->
+    tc.div '#modal'
+    tc.div '#main-navbar.navbar.navbar-default.navbar-fixed-top',
     role:'navigation'
     #div '#header.listview-header'
-    div '.container-fluid', ->
-      div '.row', ->
-        div '#sidebar.col-sm-2'
-        div '#main-content.col-sm-9'
+    tc.div '.container-fluid', ->
+      tc.div '.row', ->
+        tc.div '#sidebar.col-sm-2'
+        tc.div '#main-content.col-sm-9'
         
-    div '#footer'
+    tc.div '#footer'
     
-  BootstrapNoGridLayoutTemplate = renderable () ->
-    div '#main-navbar.navbar.navbar-default.navbar-fixed-top',
+  BootstrapNoGridLayoutTemplate = tc.renderable () ->
+    tc.div '#main-navbar.navbar.navbar-default.navbar-fixed-top',
     role:'navigation'
     #div '#header.listview-header'
-    div '.main-layout', ->
-      div '#sidebar'
-      div '#main-content'
+    tc.div '.main-layout', ->
+      tc.div '#sidebar'
+      tc.div '#main-content'
         
-    div '#footer'
+    tc.div '#footer'
     
   ########################################
-  main_sidebar = renderable (model) ->
-    div '.sidebar-menu', ->
+  main_sidebar = tc.renderable (model) ->
+    tc.div '.sidebar-menu', ->
       for entry in model.entries
-        div '.sidebar-entry-button', buttonUrl:entry.url, ->
-          text entry.name          
+        tc.div '.sidebar-entry-button', buttonUrl:entry.url, ->
+          tc.text entry.name          
   
 
   ########################################

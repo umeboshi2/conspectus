@@ -3,75 +3,65 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-  teacup = require 'teacup'
+  tc = require 'teacup'
   marked = require 'marked'
   
-  renderable = teacup.renderable
-  raw = teacup.raw
-  
   # I use "icon" for font-awesome
-  icon = teacup.i
-  text = teacup.text
+  icon = tc.i
+
   # Main Templates must use teacup.
   # The template must be a teacup.renderable, 
   # and accept a layout model as an argument.
 
-  # Tagnames to be used in the template.
-  {div, span, link, strong, label, input, img, textarea
-  button, a, nav, form, p,
-  ul, li, b,
-  h1, h2, h3,
-  subtitle, section, hr
-  } = teacup
-            
     
   ########################################
   # Templates
   ########################################
-  frontdoor_main = renderable (page) ->
-    raw marked page.content
+  frontdoor_main = tc.renderable (page) ->
+    tc.raw marked page.content
     
               
-  page_list_entry = renderable (page) ->
-    div '.listview-list-entry', ->
-      span '.btn-default.btn-xs', ->
-        a href:'#wiki/editpage/' + page.id,
+  page_list_entry = tc.renderable (page) ->
+    tc.div '.listview-list-entry', ->
+      tc.span '.btn-default.btn-xs', ->
+        tc.a href:'#wiki/editpage/' + page.id,
         style:'color:black', ->
           icon '.edit-page.fa.fa-pencil'
-      text "    " 
-      a href:'#wiki/showpage/' + page.id, page.id
+      tc.text "    " 
+      tc.a href:'#wiki/showpage/' + page.id, page.id
         
-  page_list = renderable () ->
-    div '.listview-header', ->
-      text 'Wiki Pages'
-      span '#add-new-page-button.btn.btn-default.btn-xs.pull-right', 'New Page'
-    div '.listview-list'
+  page_list = tc.renderable () ->
+    tc.div '.listview-header', ->
+      tc.text 'Wiki Pages'
+      tc.span '#add-new-page-button.btn.btn-default.btn-xs.pull-right',
+      'New Page'
+    tc.div '.listview-list'
 
-  show_page_view = renderable (page) ->
-    div '.listview-header', ->
-      text page.name
-    div '.listview-list', ->
-      teacup.raw marked page.content
+  show_page_view = tc.renderable (page) ->
+    tc.div '.listview-header', ->
+      tc.text page.name
+    tc.div '.listview-list', ->
+      tc.raw marked page.content
       
-  edit_page = renderable (page) ->
-    div '.listview-header', ->
-      text "Editing " + page.id
-      div '#save-button.pull-left.btn.btn-default.btn-xs', ->
-        text 'save'
-    div '#editor'
+  edit_page = tc.renderable (page) ->
+    tc.div '.listview-header', ->
+      tc.text "Editing " + page.id
+      tc.div '#save-button.pull-left.btn.btn-default.btn-xs', ->
+        tc.text 'save'
+    tc.div '#editor'
 
-  new_page_form = renderable () ->
-    div '.form-group', ->
-      label '.control-label', for:'input_name', 'Page Name'
-      input '#input_name.form-control',
+  new_page_form = tc.renderable () ->
+    tc.div '.form-group', ->
+      tc.label '.control-label', for:'input_name', 'Page Name'
+      tc.input '#input_name.form-control',
       name:'name', dataValidation:'name',
       placeholder:'New Page', value:''
-    div '.form-group', ->
-      label '.control-label', for:'input_content', 'Content'
-      textarea '#input_content.form-control',
+    tc.div '.form-group', ->
+      tc.label '.control-label', for:'input_content', 'Content'
+      tc.textarea '#input_content.form-control',
       name:'content', dataValidation:'content',
       placeholder:'...add text....', value:''
-    input '.btn.btn-default.btn-xs', type:'submit', value:'Add Page'
+    tc.input '.btn.btn-default.btn-xs', type:'submit', value:'Add Page'
     
 
       
