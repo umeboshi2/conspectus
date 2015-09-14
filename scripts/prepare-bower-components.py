@@ -75,6 +75,13 @@ def handle_fontawesome(pathspec):
             handle_file(path)
         else:
             raise RuntimeError, "Don't know what to do with %s." % path
+    fpath = pathspec[0]
+    while os.path.basename(fpath) != 'font-awesome':
+        fpath = os.path.dirname(fpath)
+    fontpath = os.path.join(fpath, 'fonts')
+    for font in os.listdir(fontpath):
+        handle_file(os.path.join(fontpath, font))
+    
         
 def handle_ace_editororig(components):
     basedir = os.path.join(components, 'ace-builds/src')
