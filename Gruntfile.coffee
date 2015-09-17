@@ -42,12 +42,6 @@ module.exports = (grunt) ->
         options:
           stdout: true
 
-      compileBuildJS:
-        command: 'python scripts/make-build-js.py'
-        options:
-          stdout: true
-          
-        
     watch:
       coffee:
         files: ['coffee/**/*.coffee']
@@ -57,10 +51,7 @@ module.exports = (grunt) ->
       compass:
         files: ['sass/**/*.scss']
         tasks: ['compass:watch']
-      buildjs:
-        files: 'build.coffee'
-        tasks: ['shell:compileBuildJS']
-
+        
     concurrent:
       watchers:
         tasks: ['watch:coffee', 'watch:compass']
@@ -103,7 +94,6 @@ module.exports = (grunt) ->
       'shell:bower'
       'coffee:compile'
       'compass:compile'
-      'shell:compileBuildJS'
       'coffee:compileWithMaps'
       ]
 
