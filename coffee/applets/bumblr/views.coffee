@@ -204,15 +204,6 @@ define (require, exports, module) ->
         @masonry.reloadItems()
         @masonry.layout()      
   
-    onRenderTemplate: ->
-      #console.log 'onRenderTemplate'
-      
-    onRenderCollection: ->
-      #console.log 'onRenderCollection'
-
-    onRender: ->
-      #console.log 'onRender'
-      
     onDomRefresh: () ->
       console.log 'onDomRefresh called on BlogPostListView'
       $('html').keydown @keydownHandler

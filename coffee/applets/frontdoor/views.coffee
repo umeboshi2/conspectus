@@ -7,6 +7,7 @@ define (require, exports, module) ->
 
   FDTemplates = require 'frontdoor/templates'
 
+
   BaseSideBarView = ft.views.sidebar
   
   class FrontDoorMainView extends Backbone.Marionette.ItemView
