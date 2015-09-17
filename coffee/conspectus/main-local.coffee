@@ -5,11 +5,11 @@ require.config
   baseUrl: '../javascripts/conspectus'
   paths:
     jquery: "#{components}/jquery/dist/jquery"
-    underscore: "#{components}/lodash/dist/lodash.compat"
+    underscore: "#{components}/lodash-compat/lodash"
     backbone: "#{components}/backbone/backbone"
     'backbone.babysitter': "#{components}/backbone.babysitter/lib/backbone.babysitter"
     'backbone.wreqr': "#{components}/backbone.wreqr/lib/backbone.wreqr"
-    marionette: "#{components}/marionette/lib/core/backbone.marionette"
+    marionette: "#{components}/backbone.marionette/lib/core/backbone.marionette"
     validation: "#{components}/backbone.validation/dist/backbone-validation-amd"
     bblocalStorage: "#{components}/backbone.localStorage/backbone.localStorage"
     'backbone.paginator': "#{components}/backbone.paginator/lib/backbone.paginator"
@@ -20,6 +20,7 @@ require.config
     requirejs: "#{components}/requirejs/require"
     text: "#{components}/requirejs-text/text"
     teacup: "#{components}/teacup/lib/teacup"
+    'teacup-camel-to-kebab': "#{components}/teacup-camel-to-kebab/lib/index"
     marked: "#{components}/marked/lib/marked"
     ace: "#{components}/ace/lib/ace"
     'matches-selector': "#{components}/matches-selector"
@@ -33,11 +34,9 @@ require.config
     masonry: "#{components}/masonry/masonry"
     outlayer: "#{components}/outlayer"
     imagesloaded: "#{components}/imagesloaded/imagesloaded"
+
+    furniture: "#{components}/furniture/dist/furniture"
     
-    # common is the path to the common modules
-    # These should maybe be packaged as bower
-    # component.
-    common: '../common'
     # applets
     hubby: '../applets/hubby'
     bumblr: '../applets/bumblr'
@@ -76,20 +75,9 @@ require.config
         #filename[1].split(".")[0]
         "application"
       ].join("/")
-      require [modulename, 'common/util'], (App, Util) ->
-        return Util.start_application(App)
+      require [modulename, 'furniture'], (App, ft) ->
+        return ft.util.start_application(App)
     else
       console.log "no modulename found via location.pathname"  if window.console
     return
     
-#require [
-#  'application'
-#  'common/util'
-#  'frontdoor/main'
-#  ], (App, Util) ->
-#  # debug
-#  window.app = App
-#  # simple app starter
-#  return Util.start_application(App)
-        
-        

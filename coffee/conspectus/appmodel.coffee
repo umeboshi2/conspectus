@@ -3,8 +3,9 @@ define (require, exports, module) ->
   jQuery = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-
-  AppRegions = require 'common/appregions'
+  ft = require 'furniture'
+  
+  AppRegions = ft.misc.appregions
   
   appmodel = new Backbone.Model
     brand:

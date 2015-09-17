@@ -2,8 +2,10 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
+  ft = require 'furniture'
+  
   MainBus = require 'msgbus'
-  BaseLocalStorageModel = require 'common/localstoragemodel'
+  BaseLocalStorageModel = ft.models.localstorage
   AppBus = require 'bumblr/msgbus'
   
   ########################################

@@ -1,17 +1,19 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  ft = require 'furniture'
   
   Models = require 'models'
 
   Templates = require 'wiki/templates'
   AppBus = require 'wiki/msgbus'
   
-  FormView = require 'common/views/formview'
-  { navigate_to_url } = require 'common/util'
+  FormView = ft.views.formview
+  { navigate_to_url } = ft.util
     
-  BaseEditPageView = require 'common/views/editor'
-  BaseSideBarView = require 'common/views/sidebar'
+  BaseEditPageView = ft.views.editor
+  BaseSideBarView = ft.views.sidebar
+  
 
   # ace requirements
   require 'ace/theme/twilight'

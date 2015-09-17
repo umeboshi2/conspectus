@@ -2,6 +2,7 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  ft = require 'furniture'
   MainBus = require 'msgbus'
 
   Views = require 'bumblr/views'
@@ -9,11 +10,13 @@ define (require, exports, module) ->
   AppBus = require 'bumblr/msgbus'
     
   Collections = require 'bumblr/collections'
-  Util = require 'common/util'
+
+  
+  Util = ft.util
   
   fullCalendar = require 'fullcalendar'
 
-  { SideBarController } = require 'common/controllers'
+  { SideBarController } = ft.controllers.sidebar
 
   side_bar_data = new Backbone.Model
     entries: [
@@ -98,9 +101,10 @@ define (require, exports, module) ->
       Util.scroll_top_fast()
             
     settings_page: () ->
-      #console.log 'Settings page.....'
+      console.log 'Settings page.....'
       settings = AppBus.reqres.request 'get_app_settings'
       view = new Views.ConsumerKeyFormView model:settings
+      window.setttingsview = view
       @App.content.show view
       Util.scroll_top_fast()
       

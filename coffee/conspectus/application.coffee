@@ -6,13 +6,15 @@ define (require, exports, module) ->
   bootstrap = require 'bootstrap'
   Marionette = require 'marionette'
 
+  ft = require 'furniture'
   
-  AppRegions = require 'common/appregions'
-  MainPage = require 'common/mainpage'
+  AppRegions = ft.appregions
+  MainPage = ft.misc.mainpage
+
   
   MainBus = require 'msgbus'
   appmodel = require 'appmodel'
-  
+    
   MainPage.set_mainpage_init_handler MainBus
   
   
@@ -28,7 +30,7 @@ define (require, exports, module) ->
     
   app.ready = false
 
-  AppRegions.prepare_app app, appmodel, MainBus
+  ft.misc.appregions.prepare_app app, appmodel, MainBus
   app.ready = true
 
   

@@ -2,15 +2,16 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   MainBus = require 'msgbus'
   Marionette = require 'marionette'
-
+  ft = require 'furniture'
+  
   Templates = require 'hubby/templates'
   Models = require 'hubby/models'
   AppBus = require 'hubby/msgbus'
-  BaseSideBarView = require 'common/views/sidebar'
+  BaseSideBarView = ft.views.sidebar
   
   require 'jquery-ui'
 
-  { set_get_navbar_color_handlers } = require 'common/mainpage'
+  { set_get_navbar_color_handlers } = ft.misc.mainpage
 
   # set the color handlers for the calendar events.
   set_get_navbar_color_handlers MainBus

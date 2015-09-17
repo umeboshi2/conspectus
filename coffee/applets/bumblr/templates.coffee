@@ -1,7 +1,8 @@
 # modular template loading
 define (require, exports, module) ->
   tc = require 'teacup'
-
+  ft = require 'furniture'
+  { form_group_input_div } = ft.templates.forms
   # I use "icon" for font-awesome
   icon = tc.i
   
@@ -9,7 +10,6 @@ define (require, exports, module) ->
   # The template must be a teacup.renderable, 
   # and accept a layout model as an argument.
 
-  { form_group_input_div } = require 'common/templates'
     
   ########################################
   # Templates
@@ -67,7 +67,7 @@ define (require, exports, module) ->
           value: 10
       
   simple_post_view = tc.renderable (post) ->
-    #window.thispost = post
+    window.thispost = post
     tc.div '.listview-list-entry', ->
       #p ->
       # a href:post.post_url, target:'_blank', post.blog_name
@@ -77,10 +77,12 @@ define (require, exports, module) ->
         current_width = 0
         current_size = null
         for size in photo.alt_sizes
-          if size.width > current_width and size.width < post.target_width
+          #if size.width > current_width and size.width < post.target_width
+          if size.width > current_width and size.width < 300
             current_size = size
             current_width = size.width
-        size = current_size 
+        size = current_size
+        window.ttsize = size
         tc.a href:post.post_url, target:'_blank', ->
           tc.img src:size.url
 

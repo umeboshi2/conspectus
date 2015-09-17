@@ -1,12 +1,13 @@
 #
 define (require, exports, module) ->
   Backbone = require 'backbone'
+  ft = require 'furniture'
   MainBus = require 'msgbus'
 
   Controller = require 'hubby/controller'
   AppBus = require 'hubby/msgbus'  
 
-  { BootStrapAppRouter } = require 'common/approuters'
+  { BootStrapAppRouter } = ft.approuters.bootstrap
 
   class Router extends BootStrapAppRouter
     appRoutes:

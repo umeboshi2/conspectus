@@ -3,7 +3,7 @@ define (require, exports, module) ->
   _ = require 'underscore'
   Backbone = require 'backbone'
   tc = require 'teacup'
-
+  
 
   # Main Templates must use teacup.
   # The template must be a teacup.renderable, 

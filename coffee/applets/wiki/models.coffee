@@ -2,7 +2,8 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-  BaseLocalStorageModel = require 'common/localstoragemodel'
+  ft = require 'furniture'
+  BaseLocalStorageModel = ft.models.localstorage
     
   ########################################
   # Models

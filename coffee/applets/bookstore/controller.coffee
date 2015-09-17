@@ -2,6 +2,8 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  ft = require 'furniture'
+  
   MainBus = require 'msgbus'
 
   Views = require 'bookstore/views'
@@ -9,7 +11,7 @@ define (require, exports, module) ->
   # make sure handlers are set
   require 'bookstore/collections'
   
-  { SideBarController } = require 'common/controllers'
+  { SideBarController } = ft.controllers.sidebar
   
 
   class Marionette.Region.Dialog extends Marionette.Region

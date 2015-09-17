@@ -2,6 +2,8 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  ft = require 'furniture'
+  
   MainBus = require 'msgbus'
 
   Views = require 'frontdoor/views'
@@ -11,9 +13,9 @@ define (require, exports, module) ->
   Models = require 'models'
   Collections = require 'collections'
 
-  Util = require 'common/util'
+  Util = ft.util
 
-  { SideBarController } = require 'common/controllers'
+  { SideBarController } = ft.controllers.sidebar
 
   side_bar_data = new Backbone.Model
     entries: [

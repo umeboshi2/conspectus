@@ -2,9 +2,10 @@
 define (require, exports, module) ->
   tc = require 'teacup'
   marked = require 'marked'
+  ft = require 'furniture'
   
   { capitalize
-    handle_newlines } = require 'common/util'
+    handle_newlines } = ft.util
 
 
   # Main Templates must use teacup.

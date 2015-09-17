@@ -1,13 +1,15 @@
 #
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  Util = require 'common/util'
+  ft = require 'furniture'
+  
+  Util = ft.util
   MainBus = require 'msgbus'
 
   Controller = require 'bumblr/controller'
   AppBus = require 'bumblr/msgbus'
 
-  { BootStrapAppRouter } = require 'common/approuters'
+  { BootStrapAppRouter } = ft.approuters.bootstrap
   
 
   # FIXME: this is to make sure that AppBus handlers

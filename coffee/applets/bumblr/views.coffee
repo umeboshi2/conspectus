@@ -2,19 +2,23 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   MainBus = require 'msgbus'
   Marionette = require 'marionette'
+  ft = require 'furniture'
+  
   Masonry = require 'masonry'
   imagesLoaded = require 'imagesloaded'
 
-  FormView = require 'common/views/formview'
+  FormView = ft.views.formview
+  
   Templates = require 'bumblr/templates'
   Models = require 'bumblr/models'
   AppBus = require 'bumblr/msgbus'
   
   BaseModels = require 'models'
-  BaseSideBarView = require 'common/views/sidebar'
+  BaseSideBarView = ft.views.sidebar
+  
   require 'jquery-ui'
 
-  { navigate_to_url } = require 'common/util'
+  { navigate_to_url } = ft.util
 
   class SideBarView extends BaseSideBarView
 

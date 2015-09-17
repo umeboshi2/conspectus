@@ -1,11 +1,12 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   MainBus = require 'msgbus'
-
+  ft = require 'furniture'
+  
   Controller = require 'wiki/controller'
   AppBus = require 'wiki/msgbus'
 
-  { BootStrapAppRouter } = require 'common/approuters'
+  { BootStrapAppRouter } = ft.approuters.bootstrap
     
   # require this for msgbus handlers
   require 'wiki/collections'

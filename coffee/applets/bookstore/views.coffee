@@ -1,6 +1,8 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  ft = require 'furniture'
+  
   Masonry = require 'masonry'
   imagesLoaded = require 'imagesloaded'
       
@@ -9,11 +11,11 @@ define (require, exports, module) ->
   Templates = require 'bookstore/templates'
   AppBus = require 'bookstore/msgbus'
   
-  FormView = require 'common/views/formview'
-  { navigate_to_url } = require 'common/util'
+  FormView = ft.views.formview
+  { navigate_to_url } = ft.util
     
-  BaseEditPageView = require 'common/views/editor'
-  BaseSideBarView = require 'common/views/sidebar'
+  BaseEditPageView = ft.views.editor
+  BaseSideBarView = ft.views.sidebar
 
   class FrontDoorMainView extends Backbone.Marionette.ItemView
     template: Templates.frontdoor_main

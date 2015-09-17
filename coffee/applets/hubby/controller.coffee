@@ -2,6 +2,8 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  ft = require 'furniture'
+  
   MainBus = require 'msgbus'
 
   Views = require 'hubby/views'
@@ -12,9 +14,9 @@ define (require, exports, module) ->
 
   fullCalendar = require 'fullcalendar'
   { navbar_set_active
-    scroll_top_fast } = require 'common/util'
+    scroll_top_fast } = ft.util
 
-  { SideBarController } = require 'common/controllers'
+  { SideBarController } = ft.controllers.sidebar
     
   
   sidebar_model = new Backbone.Model
