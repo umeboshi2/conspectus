@@ -21,10 +21,6 @@ require.config
     teacup: '../../components/teacup/lib/teacup'
     marked: '../../components/marked/lib/marked'
     ace: '../../components/ace/lib/ace'
-    # common is the path to the common modules
-    # These should maybe be packaged as bower
-    # component.
-    common: '../common'
   # FIXME:  try to reduce the shim to only the
   # necessary resources
   shim:
@@ -46,12 +42,12 @@ require.config
 
 require [
   'application'
-  'common/util'
+  'furniture'
   'frontdoor/main'
-  ], (App, Util) ->
+  ], (App, ft) ->
   # debug
   window.app = App
   # simple app starter
-  return Util.start_application(App)
+  return ft.util.start_application(App)
         
         

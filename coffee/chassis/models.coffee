@@ -2,9 +2,11 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
-
-  BaseLocalStorageModel = require 'common/localstoragemodel'
+  ft = require 'furniture'
+  
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  
+  BaseLocalStorageModel = ft.models.localstorage
     
   ########################################
   # Models
@@ -14,7 +16,7 @@ define (require, exports, module) ->
     id: 'app_settings'
 
   app_settings = new AppSettings
-  MainBus.reqres.setHandler 'get_app_settings', ->
+  MainChannel.reqres.setHandler 'get_app_settings', ->
     app_settings
     
   class Page extends Backbone.Model
