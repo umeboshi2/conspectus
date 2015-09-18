@@ -4,38 +4,35 @@ components = '../../components'
 require.config
   baseUrl: '../javascripts/conspectus'
   paths:
-    jquery: "#{components}/jquery/dist/jquery"
-    underscore: "#{components}/lodash-compat/lodash"
+    ace: "#{components}/ace/lib/ace"
     backbone: "#{components}/backbone/backbone"
     'backbone.babysitter': "#{components}/backbone.babysitter/lib/backbone.babysitter"
-    'backbone.wreqr': "#{components}/backbone.wreqr/lib/backbone.wreqr"
-    marionette: "#{components}/backbone.marionette/lib/core/backbone.marionette"
-    validation: "#{components}/backbone.validation/dist/backbone-validation-amd"
-    bblocalStorage: "#{components}/backbone.localStorage/backbone.localStorage"
     'backbone.paginator': "#{components}/backbone.paginator/lib/backbone.paginator"
+    'backbone.wreqr': "#{components}/backbone.wreqr/lib/backbone.wreqr"
+    bblocalStorage: "#{components}/backbone.localStorage/backbone.localStorage"
     bootstrap: "#{components}/bootstrap/dist/js/bootstrap"
-    moment: "#{components}/moment/moment"
-    fullcalendar: "#{components}/fullcalendar/dist/fullcalendar"
-    'jquery-ui': "#{components}/jquery-ui/jquery-ui"
-    requirejs: "#{components}/requirejs/require"
-    text: "#{components}/requirejs-text/text"
-    teacup: "#{components}/teacup/lib/teacup"
-    'teacup-camel-to-kebab': "#{components}/teacup-camel-to-kebab/lib/index"
-    marked: "#{components}/marked/lib/marked"
-    ace: "#{components}/ace/lib/ace"
-    'matches-selector': "#{components}/matches-selector"
-    'jquery.bridget': "#{components}/jquery-bridget/jquery.bridget"
     'doc-ready': "#{components}/doc-ready"
     eventEmitter: "#{components}/eventEmitter"
-    'get-size': "#{components}/get-size"
     eventie: "#{components}/eventie"
-    'get-style-property': "#{components}/get-style-property"
     'fizzy-ui-utils': "#{components}/fizzy-ui-utils"
-    masonry: "#{components}/masonry/masonry"
-    outlayer: "#{components}/outlayer"
-    imagesloaded: "#{components}/imagesloaded/imagesloaded"
-
+    fullcalendar: "#{components}/fullcalendar/dist/fullcalendar"
     furniture: "#{components}/furniture/dist/furniture"
+    'get-size': "#{components}/get-size"
+    'get-style-property': "#{components}/get-style-property"
+    imagesloaded: "#{components}/imagesloaded/imagesloaded"
+    jquery: "#{components}/jquery/dist/jquery"
+    'jquery-ui': "#{components}/jquery-ui/jquery-ui"
+    marionette: "#{components}/backbone.marionette/lib/core/backbone.marionette"
+    marked: "#{components}/marked/lib/marked"
+    masonry: "#{components}/masonry/masonry"
+    'matches-selector': "#{components}/matches-selector"
+    moment: "#{components}/moment/moment"
+    outlayer: "#{components}/outlayer"
+    requirejs: "#{components}/requirejs/require"
+    teacup: "#{components}/teacup/lib/teacup"
+    underscore: "#{components}/lodash-compat/lodash"
+    validation: "#{components}/backbone.validation/dist/backbone-validation-amd"
+
     
     # applets
     hubby: '../applets/hubby'
@@ -64,6 +61,7 @@ require.config
       deps: ['backbone']
       exports: 'Backbone.localStorage'
   deps: ['require']
+  #FIXME
   callback: (require) ->
     'use strict'
     filename = location.pathname.match(/\/([^\/]*)$/)

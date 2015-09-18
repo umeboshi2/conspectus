@@ -11,7 +11,8 @@ define (require, exports, module) ->
     brand:
       name: 'Conspectus'
       url: '#'
-    apps:
+    frontdoor_app: 'frontdoor'
+    applets:
       [
         {
           appname: 'wiki'
@@ -28,19 +29,13 @@ define (require, exports, module) ->
           name: 'Hubby'
           url: '#hubby'
         }
-        {
-          appname: 'bookstore'
-          name: 'Bookstore'
-          url: '#bookstore'
-        }
       ]
-    appregions: AppRegions.basic_appregions
-    approutes: [
+    regions: AppRegions.basic_appregions
+    routes: [
       'frontdoor:route'
       'wiki:route'
       'bumblr:route'
       'hubby:route'
-      'bookstore:route'
       ]
     
       

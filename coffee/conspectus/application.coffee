@@ -5,34 +5,35 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   bootstrap = require 'bootstrap'
   Marionette = require 'marionette'
-
+  Wreqr = require 'backbone.wreqr'
   ft = require 'furniture'
   
-  AppRegions = ft.appregions
-  MainPage = ft.misc.mainpage
+  #MainPage = ft.misc.mainpage
 
   
-  MainBus = require 'msgbus'
-  appmodel = require 'appmodel'
-    
-  MainPage.set_mainpage_init_handler MainBus
+  AppModel = require 'appmodel'
+
   
-  
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+
   # require applets
   require 'frontdoor/main'
   require 'wiki/main'
   require 'bumblr/main'
   require 'hubby/main'
-  require 'bookstore/main'
+
+  app = new Marionette.Application()
+  # attach app to window
+  window.App = app
+
+  app.ready = false
+  ft.misc.mainhandles.set_mainpage_init_handler()
+  
+  ft.misc.mainhandles.prepare_app app, AppModel
 
   
-  app = new Marionette.Application()
     
-  app.ready = false
-
-  ft.misc.appregions.prepare_app app, appmodel, MainBus
   app.ready = true
-
   
   module.exports = app
   
