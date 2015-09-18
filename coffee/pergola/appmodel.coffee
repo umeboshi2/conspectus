@@ -29,11 +29,6 @@ define (require, exports, module) ->
           name: 'Hubby'
           url: '#hubby'
         }
-        {
-          appname: 'bookstore'
-          name: 'Bookstore'
-          url: '#bookstore'
-        }
       ]
     regions: AppRegions.basic_appregions
     routes: [
@@ -41,7 +36,6 @@ define (require, exports, module) ->
       'wiki:route'
       'bumblr:route'
       'hubby:route'
-      'bookstore:route'
       ]
     
       

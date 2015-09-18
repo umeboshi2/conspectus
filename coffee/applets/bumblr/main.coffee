@@ -3,11 +3,13 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   ft = require 'furniture'
   
-  Util = ft.util
-  MainBus = require 'msgbus'
-
   Controller = require 'bumblr/controller'
-  AppBus = require 'bumblr/msgbus'
+
+  Util = ft.util
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'bumblr'
+
+
 
   { BootStrapAppRouter } = ft.approuters.bootstrap
   
@@ -27,19 +29,19 @@ define (require, exports, module) ->
       'bumblr/addblog' : 'add_new_blog'
       
   current_calendar_date = undefined
-  AppBus.commands.setHandler 'maincalendar:set_date', () ->
+  AppChannel.reqres.setHandler 'maincalendar:set_date', () ->
     cal = $ '#maincalendar'
     current_calendar_date = cal.fullCalendar 'getDate'
 
-  AppBus.reqres.setHandler 'maincalendar:get_date', () ->
+  AppChannel.reqres.setHandler 'maincalendar:get_date', () ->
     current_calendar_date
     
-  MainBus.commands.setHandler 'bumblr:route', () ->
+  MainChannel.reqres.setHandler 'applet:bumblr:route', () ->
     console.log "bumblr:route being handled..."
-    blog_collection = AppBus.reqres.request 'get_local_blogs'
+    blog_collection = AppChannel.reqres.request 'get_local_blogs'
     response = blog_collection.fetch()
     response.done =>
-      controller = new Controller MainBus
+      controller = new Controller MainChannel
       router = new Router
         controller: controller
       #console.log 'bumblr router created'

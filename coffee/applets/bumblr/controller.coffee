@@ -2,19 +2,18 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  fullCalendar = require 'fullcalendar'
   ft = require 'furniture'
-  MainBus = require 'msgbus'
 
   Views = require 'bumblr/views'
   Models = require 'bumblr/models'
-  AppBus = require 'bumblr/msgbus'
-    
   Collections = require 'bumblr/collections'
 
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'bumblr'
   
   Util = ft.util
   
-  fullCalendar = require 'fullcalendar'
 
   { SideBarController } = ft.controllers.sidebar
 
@@ -30,7 +29,7 @@ define (require, exports, module) ->
       }
       ]
 
-  credentials = AppBus.reqres.request 'get_app_settings'
+  credentials = AppChannel.reqres.request 'get_app_settings'
   api_key = credentials.get 'consumer_key'
   #console.log 'api_key is -> ' + api_key
   
@@ -41,42 +40,45 @@ define (require, exports, module) ->
     init_page: ->
       #console.log 'init_page', @App
       view = new Views.BlogModal()
-      @App.modal.show view
+      modal = MainChannel.reqres.request 'main:app:get-region', 'modal'
+      modal.show view
       
     set_header: (title) ->
       header = $ '#header'
       header.text title
       
     start: ->
-      if @App.content.hasView()
-        console.log 'empty content....'
-        @App.content.empty()
-      if @App.sidebar.hasView()
+      content = MainChannel.reqres.request 'main:app:get-region', 'content'
+      sidebar = MainChannel.reqres.request 'main:app:get-region', 'sidebar'
+      if content.hasView()
+        #console.log 'empty content....'
+        content.empty()
+      if sidebar.hasView()
         console.log 'empty sidebar....'
-        @App.sidebar.empty()
+        sidebar.empty()
       @set_header 'Bumblr'
       @list_blogs()
       
     show_mainview: () ->
       @make_sidebar()
       view = new Views.MainBumblrView
-      @App.content.show view
+      @_show_content view
       Util.scroll_top_fast()
       
 
     show_dashboard: () ->
       @make_sidebar()
       view = new Views.BumblrDashboardView
-      @App.content.show view
+      @_show_content view
       Util.scroll_top_fast()
         
     list_blogs: () ->
       #console.log 'list_blogs called;'
       @make_sidebar()
-      blogs = AppBus.reqres.request 'get_local_blogs'
+      blogs = AppChannel.reqres.request 'get_local_blogs'
       view = new Views.SimpleBlogListView
         collection: blogs
-      @App.content.show view
+      @_show_content view
       Util.scroll_top_fast()
       
       
@@ -85,27 +87,27 @@ define (require, exports, module) ->
       @make_sidebar()
       make_collection = 'make_blog_post_collection'
       base_hostname = blog_id + '.tumblr.com'
-      collection = AppBus.reqres.request make_collection, base_hostname
+      collection = AppChannel.reqres.request make_collection, base_hostname
       response = collection.fetch()
       response.done =>
         view = new Views.BlogPostListView
           collection: collection
-        @App.content.show view
+        @_show_content view
         Util.scroll_top_fast()
 
     add_new_blog: () ->
       #console.log 'add_new_blog called'
       @make_sidebar()
       view = new Views.NewBlogFormView
-      @App.content.show view
+      @_show_content view
       Util.scroll_top_fast()
             
     settings_page: () ->
       console.log 'Settings page.....'
-      settings = AppBus.reqres.request 'get_app_settings'
+      settings = AppChannel.reqres.request 'get_app_settings'
       view = new Views.ConsumerKeyFormView model:settings
       window.setttingsview = view
-      @App.content.show view
+      @_show_content view
       Util.scroll_top_fast()
       
   module.exports = Controller

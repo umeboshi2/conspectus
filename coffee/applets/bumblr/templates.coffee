@@ -46,6 +46,17 @@ define (require, exports, module) ->
       tc.a href:'#bumblr/viewblog/' + blog.name, blog.name
       icon ".delete-blog-button.fa.fa-close.btn.btn-default.btn-xs",
       blog:blog.name
+
+  page_size_input_div = tc.renderable () ->
+    tc.div '#page-size-input-div', ->
+      form_group_input_div
+        input_id: 'input_pagesize'
+        label: 'Page Size'
+        input_attributes:
+          name: 'pagesize'
+          placeholder: ''
+          value: 10
+    
       
   simple_post_page_view = tc.renderable () ->
     tc.div '.mytoolbar.row', ->
@@ -57,14 +68,6 @@ define (require, exports, module) ->
         tc.li '.next', ->
           icon '#next-page-button.fa.fa-arrow-right.btn.btn-default'
     tc.div '#posts-container.row'
-    tc.div '#page-size-input-div', ->
-      form_group_input_div
-        input_id: 'input_pagesize'
-        label: 'Page Size'
-        input_attributes:
-          name: 'pagesize'
-          placeholder: ''
-          value: 10
       
   simple_post_view = tc.renderable (post) ->
     window.thispost = post
