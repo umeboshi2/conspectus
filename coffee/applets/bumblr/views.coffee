@@ -1,22 +1,21 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
   Marionette = require 'marionette'
+  require 'jquery-ui'
   ft = require 'furniture'
   
   Masonry = require 'masonry'
   imagesLoaded = require 'imagesloaded'
 
-  FormView = ft.views.formview
-  
+    
   Templates = require 'bumblr/templates'
   Models = require 'bumblr/models'
-  AppBus = require 'bumblr/msgbus'
   
-  BaseModels = require 'models'
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'bumblr'
   BaseSideBarView = ft.views.sidebar
-  
-  require 'jquery-ui'
+  FormView = ft.views.formview
+
 
   { navigate_to_url } = ft.util
 
@@ -84,7 +83,7 @@ define (require, exports, module) ->
 
     updateModel: ->
       #console.log 'updateModel'
-      @collection = AppBus.reqres.request 'get_local_blogs'
+      @collection = AppChannel.reqres.request 'get_local_blogs'
       @model = @collection.add_blog @ui.blog_name.val()
 
     onSuccess: ->
@@ -135,8 +134,8 @@ define (require, exports, module) ->
     blog_dialog: (event) ->
       console.log event
       
-      app = MainBus.reqres.request 'main:app:object'
-      app.modal.showModal app.modal.currentView
+      modal = MainChannel.reqres.request 'main:app:get-region', 'modal'
+      modal.showModal modal.currentView
       
 
     manage_slideshow: () ->
@@ -204,15 +203,6 @@ define (require, exports, module) ->
         @masonry.reloadItems()
         @masonry.layout()      
   
-    onRenderTemplate: ->
-      #console.log 'onRenderTemplate'
-      
-    onRenderCollection: ->
-      #console.log 'onRenderCollection'
-
-    onRender: ->
-      #console.log 'onRender'
-      
     onDomRefresh: () ->
       console.log 'onDomRefresh called on BlogPostListView'
       $('html').keydown @keydownHandler
@@ -244,7 +234,7 @@ define (require, exports, module) ->
         token_secret: @ui.token_secret.val()
         
     createModel: ->
-      AppBus.reqres.request 'get_app_settings'
+      AppChannel.reqres.request 'get_app_settings'
         
     onSuccess: (model) ->
       #console.log 'onSuccess called'
