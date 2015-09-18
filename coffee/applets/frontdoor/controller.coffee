@@ -46,7 +46,7 @@ define (require, exports, module) ->
     sidebar_model: side_bar_data
       
     make_main_content: ->
-      console.log "make_main_content called in frontdoor/controller"
+      #console.log "make_main_content called in frontdoor/controller"
       @make_sidebar()
       @show_page 'intro'
 
@@ -62,7 +62,7 @@ define (require, exports, module) ->
       content_region.show view
 
     start: ->
-      console.log 'frontdoor controller.start called'
+      #console.log 'frontdoor controller.start called'
       @make_main_content()
       #console.log 'frontdoor started'
 
