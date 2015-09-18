@@ -4,7 +4,7 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
 
   Models = require 'hubby/models'
-  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
+  AppChannel = Backbone.Wreqr.radio.channel 'hubby'
   
   ########################################
   # Collections

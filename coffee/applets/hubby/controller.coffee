@@ -10,7 +10,7 @@ define (require, exports, module) ->
   Models = require 'hubby/models'
   
   MainChannel = Backbone.Wreqr.radio.channel 'global'
-  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
+  AppChannel = Backbone.Wreqr.radio.channel 'hubby'
 
 
   { navbar_set_active

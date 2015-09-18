@@ -6,7 +6,7 @@ define (require, exports, module) ->
   Controller = require 'hubby/controller'
 
   MainChannel = Backbone.Wreqr.radio.channel 'global'
-  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
+  AppChannel = Backbone.Wreqr.radio.channel 'hubby'
 
   { BootStrapAppRouter } = ft.approuters.bootstrap
 
