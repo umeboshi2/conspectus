@@ -4,7 +4,7 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
 
   Models = require 'hubby/models'
-  AppBus = require 'hubby/msgbus'
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
   
   ########################################
   # Collections
@@ -20,7 +20,7 @@ define (require, exports, module) ->
     url: 'http://hubby.littledebian.org/rest/v0/main/meeting'
 
   main_meeting_list = new MeetingCollection
-  AppBus.reqres.setHandler 'meetinglist', ->
+  AppChannel.reqres.setHandler 'meetinglist', ->
     main_meeting_list
 
   class ItemActionCollection extends BaseCollection
@@ -32,7 +32,7 @@ define (require, exports, module) ->
     c.url = url
     return c
     
-  AppBus.reqres.setHandler 'item_action_collection', (itemid) ->
+  AppChannel.reqres.setHandler 'item_action_collection', (itemid) ->
     make_item_action_collection itemid
     
   module.exports =

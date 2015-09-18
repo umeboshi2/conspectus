@@ -2,10 +2,11 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   ft = require 'furniture'
-  MainBus = require 'msgbus'
 
   Controller = require 'hubby/controller'
-  AppBus = require 'hubby/msgbus'  
+
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
 
   { BootStrapAppRouter } = ft.approuters.bootstrap
 
@@ -16,16 +17,16 @@ define (require, exports, module) ->
       'hubby/listmeetings': 'list_meetings'
       
   current_calendar_date = undefined
-  AppBus.commands.setHandler 'maincalendar:set_date', () ->
+  AppChannel.reqres.setHandler 'maincalendar:set_date', () ->
     cal = $ '#maincalendar'
     current_calendar_date = cal.fullCalendar 'getDate'
 
-  AppBus.reqres.setHandler 'maincalendar:get_date', () ->
+  AppChannel.reqres.setHandler 'maincalendar:get_date', () ->
     current_calendar_date
     
-  MainBus.commands.setHandler 'hubby:route', () ->
-    console.log "hubby:route being handled..."
-    controller = new Controller MainBus
+  MainChannel.reqres.setHandler 'applet:hubby:route', () ->
+    console.log "applet:hubby:route being handled..."
+    controller = new Controller MainChannel
     router = new Router
       controller: controller
       

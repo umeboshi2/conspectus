@@ -11,6 +11,7 @@ define (require, exports, module) ->
     brand:
       name: 'Pergola'
       url: '#'
+    frontdoor_app: 'frontdoor'
     applets:
       [
         {

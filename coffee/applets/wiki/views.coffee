@@ -3,10 +3,15 @@ define (require, exports, module) ->
   Marionette = require 'marionette'
   ft = require 'furniture'
   
-  Models = require 'models'
+  Models = require 'wiki/models'
 
   Templates = require 'wiki/templates'
-  AppBus = require 'wiki/msgbus'
+
+  # ace requirements
+  require 'ace/theme/twilight'
+  require 'ace/mode/markdown'
+  
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
   
   FormView = ft.views.formview
   { navigate_to_url } = ft.util
@@ -15,9 +20,6 @@ define (require, exports, module) ->
   BaseSideBarView = ft.views.sidebar
   
 
-  # ace requirements
-  require 'ace/theme/twilight'
-  require 'ace/mode/markdown'
   
   
   class FrontDoorMainView extends Backbone.Marionette.ItemView
@@ -64,7 +66,7 @@ define (require, exports, module) ->
             
       
     updateModel: ->
-      collection = AppBus.reqres.request 'pages:collection'
+      collection = AppChannel.reqres.request 'pages:collection'
       page_id = @ui.name.val()
       @model.set
         id: page_id
