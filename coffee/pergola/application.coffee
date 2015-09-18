@@ -20,10 +20,10 @@ define (require, exports, module) ->
   
   
   # require applets
-  #require 'frontdoor/main'
-  #require 'wiki/main'
+  require 'frontdoor/main'
+  require 'wiki/main'
   #require 'bumblr/main'
-  #require 'hubby/main'
+  require 'hubby/main'
   #require 'bookstore/main'
 
   app = new Marionette.Application()
@@ -39,8 +39,9 @@ define (require, exports, module) ->
     
   #ft.misc.appregions.prepare_app app, appmodel, MainBus
   app.ready = true
-
-
+  #ft.util.navigate_to_url('#')
+  console.log "hello"
+  
   module.exports = app
   
     

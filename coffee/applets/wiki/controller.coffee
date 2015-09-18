@@ -3,10 +3,12 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
   ft = require 'furniture'
-  MainBus = require 'msgbus'
 
   Views = require 'wiki/views'
-  AppBus = require 'wiki/msgbus'
+  
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
+
   
   { SideBarController } = ft.controllers.sidebar
   
@@ -28,7 +30,7 @@ define (require, exports, module) ->
       ]
 
   class Controller extends SideBarController
-    mainbus: MainBus
+    mainbus: MainChannel
     sidebarclass: Views.SideBarView
     sidebar_model: side_bar_data
 
@@ -38,31 +40,31 @@ define (require, exports, module) ->
 
     list_pages: ->
       @make_sidebar()
-      pages = AppBus.reqres.request 'pages:collection'
+      pages = AppChannel.reqres.request 'pages:collection'
       response = pages.fetch()
       response.done =>
         view = new Views.PageListView
           collection: pages
-        @App.content.show view
-        
+        @_show_content view
+            
     show_page: (name) ->
       @make_sidebar()
-      page = AppBus.reqres.request 'pages:getpage', name
+      page = AppChannel.reqres.request 'pages:getpage', name
       view = new Views.FrontDoorMainView
         model: page
-      @App.content.show view
+      @_show_content view
   
     edit_page: (name) ->
       @make_sidebar()
-      page = AppBus.reqres.request 'pages:getpage', name
+      page = AppChannel.reqres.request 'pages:getpage', name
       view = new Views.EditPageView
         model: page
-      @App.content.show view
+      @_show_content view
 
     add_page: () ->
       @make_sidebar()
       view = new Views.NewPageFormView
-      @App.content.show view
+      @_show_content view
       
       
     start: ->

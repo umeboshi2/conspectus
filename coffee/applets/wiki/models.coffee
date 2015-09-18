@@ -3,7 +3,7 @@ define (require, exports, module) ->
   _ = require 'underscore'
   Backbone = require 'backbone'
   ft = require 'furniture'
-  BaseLocalStorageModel = ft.models.localstorage
+  #BaseLocalStorageModel = ft.models.localstorage
     
   ########################################
   # Models

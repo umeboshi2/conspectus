@@ -3,16 +3,16 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
   ft = require 'furniture'
-  
-  MainBus = require 'msgbus'
+  fullCalendar = require 'fullcalendar'  
 
+  Collections = require 'hubby/collections'
   Views = require 'hubby/views'
   Models = require 'hubby/models'
-  AppBus = require 'hubby/msgbus'
   
-  Collections = require 'hubby/collections'
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
 
-  fullCalendar = require 'fullcalendar'
+
   { navbar_set_active
     scroll_top_fast } = ft.util
 
@@ -31,7 +31,7 @@ define (require, exports, module) ->
       }
     ]
 
-  meetings = AppBus.reqres.request 'meetinglist'
+  meetings = AppChannel.reqres.request 'meetinglist'
 
   prepare_slideshow_meeting_items = (meeting) ->
     pages = []
@@ -46,7 +46,7 @@ define (require, exports, module) ->
           agenda_section = mitem.type
         
   class Controller extends SideBarController
-    mainbus: MainBus
+    mainbus: MainChannel
     sidebarclass: Views.SideBarView
     sidebar_model: sidebar_model
       
@@ -55,13 +55,14 @@ define (require, exports, module) ->
       header.text title
       
     start: ->
-      #console.log 'hubby start'
-      if @App.content.hasView()
-        console.log 'empty content....'
-        @App.content.empty()
-      if @App.sidebar.hasView()
-        console.log 'empty sidebar....'
-        @App.sidebar.empty()
+      content = MainChannel.reqres.request 'main:app:get-region', 'content'
+      sidebar = MainChannel.reqres.request 'main:app:get-region', 'sidebar'
+      if content.hasView()
+        #console.log 'empty content....'
+        content.empty()
+      if sidebar.hasView()
+        #console.log 'empty sidebar....'
+        sidebar.empty()
       @set_header 'Hubby'
       @show_calendar()
       
@@ -69,7 +70,7 @@ define (require, exports, module) ->
       #console.log 'hubby show calendar'
       @make_sidebar()
       view = new Views.MeetingCalendarView
-      @App.content.show view
+      @_show_content view
       scroll_top_fast()
       
     show_meeting: (meeting_id) ->
@@ -81,7 +82,7 @@ define (require, exports, module) ->
       response.done =>
         view = new Views.ShowMeetingView
           model: meeting
-        @App.content.show view
+        @_show_content view
       scroll_top_fast()
 
     list_meetings: () ->
@@ -91,7 +92,7 @@ define (require, exports, module) ->
         collection: meetings
       if meetings.length == 0
         meetings.fetch()
-      @App.content.show view
+      @_show_content view
       scroll_top_fast()
       
   module.exports = Controller

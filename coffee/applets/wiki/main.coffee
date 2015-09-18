@@ -1,15 +1,17 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
   ft = require 'furniture'
   
   Controller = require 'wiki/controller'
-  AppBus = require 'wiki/msgbus'
-
-  { BootStrapAppRouter } = ft.approuters.bootstrap
-    
+  
   # require this for msgbus handlers
   require 'wiki/collections'
+
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
+  
+  { BootStrapAppRouter } = ft.approuters.bootstrap
+    
   
   class Router extends BootStrapAppRouter
     appRoutes:
@@ -19,12 +21,12 @@ define (require, exports, module) ->
       'wiki/editpage/:name': 'edit_page'
       'wiki/addpage': 'add_page'
       
-  MainBus.commands.setHandler 'wiki:route', () ->
+  MainChannel.reqres.setHandler 'applet:wiki:route', () ->
     console.log "wiki:route being handled"
-    page_collection = AppBus.reqres.request 'pages:collection'
+    page_collection = AppChannel.reqres.request 'pages:collection'
     response = page_collection.fetch()
     response.done =>
-      controller = new Controller MainBus
+      controller = new Controller MainChannel
       router = new Router
         controller: controller
-      #console.log 'router created'
+      console.log 'wiki router created'

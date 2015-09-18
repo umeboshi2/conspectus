@@ -3,8 +3,6 @@ define (require, exports, module) ->
   Marionette = require 'marionette'
   ft = require 'furniture'
   
-  Models = require 'models'
-
   FDTemplates = require 'frontdoor/templates'
 
 

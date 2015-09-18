@@ -1,20 +1,21 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
   Marionette = require 'marionette'
+  require 'jquery-ui'
   ft = require 'furniture'
   
   Templates = require 'hubby/templates'
   Models = require 'hubby/models'
-  AppBus = require 'hubby/msgbus'
+
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'wiki'
   BaseSideBarView = ft.views.sidebar
   
-  require 'jquery-ui'
 
   { set_get_navbar_color_handlers } = ft.misc.mainpage
 
   # set the color handlers for the calendar events.
-  set_get_navbar_color_handlers MainBus
+  set_get_navbar_color_handlers MainChannel
 
   
   class SideBarView extends BaseSideBarView
@@ -25,7 +26,7 @@ define (require, exports, module) ->
       'font-size' : '0.9em'
 
   calendar_view_render = (view, element) ->
-    AppBus.commands.execute 'maincalendar:set_date'
+    AppChannel.reqres.request 'maincalendar:set_date'
 
   loading_calendar_events = (bool) ->
     loading = $ '#loading'
@@ -62,9 +63,9 @@ define (require, exports, module) ->
       $('html').keydown @keydownHandler
       # get the current calendar date that has been stored
       # before creating the calendar
-      date  = AppBus.reqres.request 'maincalendar:get_date'
-      navbar_color = MainBus.reqres.request 'get-navbar-color'
-      navbar_bg_color = MainBus.reqres.request 'get-navbar-bg-color'
+      date  = AppChannel.reqres.request 'maincalendar:get_date'
+      navbar_color = MainChannel.reqres.request 'get-navbar-color'
+      navbar_bg_color = MainChannel.reqres.request 'get-navbar-bg-color'
       @ui.calendar.fullCalendar
         header:
           left: 'today'
@@ -112,7 +113,7 @@ define (require, exports, module) ->
         else
           itemid = el.attr('id')
           req = 'item_action_collection'
-          collection = AppBus.reqres.request req, itemid
+          collection = AppChannel.reqres.request req, itemid
           response = collection.fetch()
           response.done =>
             html = ''
