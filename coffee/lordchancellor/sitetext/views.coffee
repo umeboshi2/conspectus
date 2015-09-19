@@ -4,9 +4,10 @@ define (require, exports, module) ->
   ft = require 'furniture'
 
   Templates = require 'sitetext/templates'
+  Models = require 'sitetext/models'
     
   MainChannel = Backbone.Wreqr.radio.channel 'global'
-  AppChannel = Backbone.Wreqr.radio.channel 'useradmin'
+  AppChannel = Backbone.Wreqr.radio.channel 'sitetext'
   
   BaseSideBarView = ft.views.sidebar
   BaseEditPageView = ft.views.editor
