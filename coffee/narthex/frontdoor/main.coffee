@@ -20,8 +20,8 @@ define (require, exports, module) ->
       'frontdoor': 'start'
       
   MainChannel.reqres.setHandler 'applet:frontdoor:route', () ->
-    console.log "frontdoor:route being handled!!!!!!!!!!!!!"
+    #console.log "frontdoor:route being handled!!!!!!!!!!!!!"
     controller = new Controller MainChannel
     router = new Router
       controller: controller
-    console.log 'frontdoor router created'
+    #console.log 'frontdoor router created'
