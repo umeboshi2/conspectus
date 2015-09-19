@@ -1,18 +1,22 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
+  Marionette = require 'marionette'
+  ft = require 'furniture'
   
   Models = require 'useradmin/models'
-
   Templates = require 'useradmin/templates'
-  AppBus = require 'useradmin/msgbus'
   
-  FormView = require 'common/views/formview'
-  { navigate_to_url } = require 'common/util'
     
-  BaseEditPageView = require 'common/views/editor'
-  BaseSideBarView = require 'common/views/sidebar'
-    
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'useradmin'
+  
+  BaseSideBarView = ft.views.sidebar
+  BaseEditPageView = ft.views.editor
+  FormView = ft.views.formview
+  
+  navigate_to_url = ft.util.navigate_to_url
+  
   class FrontDoorMainView extends Backbone.Marionette.ItemView
     template: Templates.frontdoor_main
 
@@ -50,7 +54,7 @@ define (require, exports, module) ->
         name: @ui.name.val()
         password: @ui.password.val()
         confirm: @ui.confirm.val()
-      users = AppBus.reqres.request 'get-users'
+      users = AppChannel.reqres.request 'get-users'
       users.add @model
 
     onSuccess: (model) ->
@@ -80,7 +84,9 @@ define (require, exports, module) ->
       console.log 'confirm_delete_pressed'
       button = $ '.confirm-delete-button'
       @model.destroy()
-      @App.content.empty()
+      content = MainChannel.reqres.request 'main:app:get-region', 'content'
+      content.empty()
+
       
   module.exports =
     FrontDoorMainView: FrontDoorMainView

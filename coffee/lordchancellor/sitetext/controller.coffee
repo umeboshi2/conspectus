@@ -2,16 +2,20 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
-  MainBus = require 'msgbus'
-
+  ft = require 'furniture'
+  
   Views = require 'sitetext/views'
-  AppBus = require 'sitetext/msgbus'
   require 'sitetext/collections'
     
-  { SideBarController } = require 'common/controllers'
-  
-  #    'sitetext/viewuser/:id': 'view_user'
-  
+  { SideBarController } = ft.controllers.sidebar
+
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'sitetext'
+
+
+  { navbar_set_active
+    scroll_top_fast } = ft.util
+
   side_bar_data = new Backbone.Model
     entries: [
       {
@@ -25,10 +29,10 @@ define (require, exports, module) ->
       ]
 
   class Controller extends SideBarController
-    mainbus: MainBus
+    mainbus: MainChannel
     sidebarclass: Views.SideBarView
     sidebar_model: side_bar_data
-    pages: AppBus.reqres.request 'get-pages'
+    pages: AppChannel.reqres.request 'get-pages'
     make_main_content: ->
       @make_sidebar()
       #@show_page 1
@@ -39,13 +43,13 @@ define (require, exports, module) ->
       response.done =>
         view = new Views.PageListView
           collection: @pages
-        @App.content.show view
+        @_show_content view
 
     add_page: ->
       @make_sidebar()
       #console.log "add_page called on controller"
       view = new Views.NewPageFormView
-      @App.content.show view
+      @_show_content view
 
     _show_page: (page) ->
       #window.showpage = page
@@ -53,36 +57,38 @@ define (require, exports, module) ->
       #console.log page
       view = new Views.ShowPageView
         model: page
-      @App.content.show view
-      
+      @_show_content view
+            
     show_page: (name) ->
       @make_sidebar()
       # we do this if/else in case this url is called
       # as the entry point.  This should probably be
       # generalized in a base controller class. 
       # we should probably check for length of pages
-      if not @App.content.hasView()
-        @App.content.empty()
+      content = MainChannel.reqres.request 'main:app:get-region', 'content'
+      if not content.hasView()
+        content.empty()
         response = @pages.fetch()
         response.done =>
           page = @pages.get name
           @_show_page page
       else
-        page = AppBus.reqres.request 'get-page', name
+        page = AppChannel.reqres.request 'get-page', name
         @_show_page page
       
     edit_page: (name) ->
       @make_sidebar()
       #console.log "Get page named #{name} for editing"
-      page = AppBus.reqres.request 'get-page', name
+      page = AppChannel.reqres.request 'get-page', name
       #console.log "Here is the page #{page}"
       view = new Views.EditPageView
         model: page
-      @App.content.show view
+      @_show_content view
       
     start: ->
-      if @App.content.hasView()
-        @App.content.empty()
+      content = MainChannel.reqres.request 'main:app:get-region', 'content'
+      if content.hasView()
+        content.empty()
       #console.log 'controller.start called'
       @make_main_content()
       #console.log 'wiki started'

@@ -1,15 +1,15 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
-
-  Controller = require 'sitetext/controller'
-  AppBus = require 'sitetext/msgbus'
-
-  { BootStrapAppRouter } = require 'common/approuters'
-    
-  # require this for msgbus handlers
-  require 'useradmin/collections'
+  Marionette = require 'marionette'
+  Wreqr = require 'backbone.wreqr'
+  ft = require 'furniture'
   
+  Controller = require 'sitetext/controller'
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+
+  
+  { BootStrapAppRouter } = ft.approuters.bootstrap
+
   class Router extends BootStrapAppRouter
     appRoutes:
       'sitetext': 'start'
@@ -18,8 +18,12 @@ define (require, exports, module) ->
       'sitetext/editpage/:name': 'edit_page'
       'sitetext/showpage/:name': 'show_page'
 
-  MainBus.commands.setHandler 'sitetext:route', () ->
-    console.log 'sitetext:route being handled'
-    controller = new Controller MainBus
+  MainChannel.reqres.setHandler 'applet:sitetext:route', () ->
+    #console.log "frontdoor:route being handled"
+    #page_collection = WikiChannel.reqres.request 'get-pages'
+    #response = page_collection.fetch()
+    #response.done =>
+    controller = new Controller MainChannel
     router = new Router
       controller: controller
+    console.log 'sitetext router created'

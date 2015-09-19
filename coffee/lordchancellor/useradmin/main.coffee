@@ -1,14 +1,19 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
+  Marionette = require 'marionette'
+  Wreqr = require 'backbone.wreqr'
+  ft = require 'furniture'
 
-  Controller = require 'useradmin/controller'
-  AppBus = require 'useradmin/msgbus'
-
-  { BootStrapAppRouter } = require 'common/approuters'
-    
   # require this for msgbus handlers
   require 'useradmin/collections'
+  
+  Controller = require 'useradmin/controller'
+
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+
+
+  { BootStrapAppRouter } = ft.approuters.bootstrap
+    
   
   class Router extends BootStrapAppRouter
     appRoutes:
@@ -19,8 +24,8 @@ define (require, exports, module) ->
       'useradmin/addgroup': 'add_group'
       'useradmin/viewuser/:id': 'view_user'
 
-  MainBus.commands.setHandler 'useradmin:route', () ->
-    console.log 'useradmin:route being handled'
-    controller = new Controller MainBus
+  MainChannel.reqres.setHandler 'applet:useradmin:route', () ->
+    console.log 'applet:useradmin:route being handled'
+    controller = new Controller MainChannel
     router = new Router
       controller: controller

@@ -1,17 +1,18 @@
 # modular template loading
 define (require, exports, module) ->
-  teacup = require 'teacup'
+  tc = require 'teacup'
   marked = require 'marked'
+  ft = require 'furniture'
   
   # I use "icon" for font-awesome
-  icon = teacup.i
-
+  icon = tc.i
+  
   # Main Templates must use teacup.
   # The template must be a teacup.renderable, 
   # and accept a layout model as an argument.
 
-  { form_group_input_div } = require 'common/templates'
-
+  form_group_input_div = ft.templates.forms.form_group_input_div
+  
   ########################################
   # Templates
   ########################################

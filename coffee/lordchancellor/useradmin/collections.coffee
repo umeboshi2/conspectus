@@ -2,12 +2,17 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
-  
+  Marionette = require 'marionette'
+  Wreqr = require 'backbone.wreqr'
+  ft = require 'furniture'
+
   Models = require 'useradmin/models'
-  AppBus = require 'useradmin/msgbus'
   
-  { BaseCollection } = require 'common/collections'
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'useradmin'
+  
+  # FIXME: furniture needs more than base collection!
+  { BaseCollection } = ft.collections
         
 
   ########################################
@@ -32,9 +37,9 @@ define (require, exports, module) ->
       url: "#{rscroot}/users/#{user_id}/groups"
     return new uglist
     
-  AppBus.reqres.setHandler 'get-users', ->
+  AppChannel.reqres.setHandler 'get-users', ->
     MainUserList
-  AppBus.reqres.setHandler 'get-groups', ->
+  AppChannel.reqres.setHandler 'get-groups', ->
     MainGroupList
   
   module.exports =

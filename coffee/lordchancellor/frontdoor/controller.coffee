@@ -2,19 +2,19 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
-  MainBus = require 'msgbus'
-
-  Views = require 'frontdoor/views'
-  WikiBus = require 'sitetext/msgbus'
-
   marked = require 'marked'
-  Models = require 'models'
-  Collections = require 'collections'
 
-  Util = require 'common/util'
+  ft = require 'furniture'
+  
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  WikiChannel = Backbone.Wreqr.radio.channel 'wiki'
+  
+  Views = require 'frontdoor/views'
 
-  { SideBarController } = require 'common/controllers'
 
+  Util = ft.util
+
+  { SideBarController } = ft.controllers.sidebar
 
   side_bar_data = new Backbone.Model
     entries: [
@@ -37,22 +37,21 @@ define (require, exports, module) ->
       ]
 
   class Controller extends SideBarController
-    mainbus: MainBus
+    mainbus: MainChannel
     sidebarclass: Views.SideBarView
     sidebar_model: side_bar_data
       
     make_main_content: ->
       @make_sidebar()
-      @show_page 'intro'
 
     show_page: (name) ->
       @make_sidebar()
-      page = WikiBus.reqres.request 'pages:getpage', name
+      #page = WikiBus.reqres.request 'pages:getpage', name
       #response = page.fetch()
       #response.done =>
-      view = new Views.FrontDoorMainView
-        model: page
-      @App.content.show view
+      #view = new Views.FrontDoorMainView
+      #  model: page
+      #@_show_content view
 
     start: ->
       #console.log 'controller.start called'

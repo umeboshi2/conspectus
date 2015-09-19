@@ -12,7 +12,6 @@ define (require, exports, module) ->
   ########################################
   frontdoor_main = tc.renderable (page) ->
     tc.raw marked page.content
-    
               
   module.exports =
     frontdoor_main: frontdoor_main

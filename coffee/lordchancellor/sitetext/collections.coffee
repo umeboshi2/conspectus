@@ -2,14 +2,14 @@ define (require, exports, module) ->
   $ = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
+  ft = require 'furniture'
   
   Models = require 'sitetext/models'
-  AppBus = require 'sitetext/msgbus'
+  AppChannel = Backbone.Wreqr.radio.channel 'sitetext'
   
-  { BaseCollection } = require 'common/collections'
+  { BaseCollection } = ft.collections
+  
         
-
   ########################################
   # Collections
   ########################################
@@ -20,11 +20,11 @@ define (require, exports, module) ->
     url: rscroot + '/sitetext'
 
   main_page_list = new PageCollection
-  AppBus.reqres.setHandler 'get-pages', ->
-    #window.main_page_list = main_page_list
+  AppChannel.reqres.setHandler 'get-pages', ->
+    window.main_page_list = main_page_list
     main_page_list
 
-  AppBus.reqres.setHandler 'get-page', (name) ->
+  AppChannel.reqres.setHandler 'get-page', (name) ->
     #console.log "get-page #{name}"
     main_page_list.get name
     

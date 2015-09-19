@@ -2,25 +2,28 @@
 # Simple entry app
 define (require, exports, module) ->
   Backbone = require 'backbone'
-  MainBus = require 'msgbus'
-  WikiBus = require 'sitetext/msgbus'
-  AppBus = require 'frontdoor/msgbus'
+  Marionette = require 'marionette'
+  Wreqr = require 'backbone.wreqr'
+  ft = require 'furniture'
   
   Controller = require 'frontdoor/controller'
 
-  { BootStrapAppRouter } = require 'common/approuters'
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  WikiChannel = Backbone.Wreqr.radio.channel 'sitetext'
+  
+  { BootStrapAppRouter } = ft.approuters.bootstrap
 
   class Router extends BootStrapAppRouter
     appRoutes:
       '': 'start'
       'frontdoor': 'start'
       
-  MainBus.commands.setHandler 'frontdoor:route', () ->
-    console.log "frontdoor:route being handled"
-    page_collection = WikiBus.reqres.request 'get-pages'
-    response = page_collection.fetch()
-    response.done =>
-      controller = new Controller MainBus
-      router = new Router
-        controller: controller
-      #console.log 'router created'
+  MainChannel.reqres.setHandler 'applet:frontdoor:route', () ->
+    #console.log "frontdoor:route being handled"
+    #page_collection = WikiChannel.reqres.request 'get-pages'
+    #response = page_collection.fetch()
+    #response.done =>
+    controller = new Controller MainChannel
+    router = new Router
+      controller: controller
+    #console.log 'router created'

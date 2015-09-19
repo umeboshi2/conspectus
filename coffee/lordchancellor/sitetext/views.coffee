@@ -1,18 +1,19 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
-  
-  Models = require 'sitetext/models'
+  ft = require 'furniture'
 
   Templates = require 'sitetext/templates'
-  AppBus = require 'sitetext/msgbus'
+    
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'useradmin'
   
-  FormView = require 'common/views/formview'
-  { navigate_to_url } = require 'common/util'
-    
-  BaseEditPageView = require 'common/views/editor'
-  BaseSideBarView = require 'common/views/sidebar'
-    
+  BaseSideBarView = ft.views.sidebar
+  BaseEditPageView = ft.views.editor
+  FormView = ft.views.formview
+  
+  navigate_to_url = ft.util.navigate_to_url
+
   class SideBarView extends BaseSideBarView
 
   class PageListEntryView extends Backbone.Marionette.ItemView
@@ -47,7 +48,7 @@ define (require, exports, module) ->
       new Models.PostPageModel
         
     updateModel: ->
-      collection = AppBus.reqres.request 'get-pages'
+      collection = AppChannel.reqres.request 'get-pages'
       page_id = @ui.name.val()
       @model.set
         name: page_id
@@ -65,7 +66,7 @@ define (require, exports, module) ->
       # presumably because we used a different model
       # type for the post, so we refresh the collection
       # before we load the edit page. 
-      collection = AppBus.reqres.request 'get-pages'
+      collection = AppChannel.reqres.request 'get-pages'
       response = collection.fetch()
       response.done =>
         navigate_to_url "#sitetext/editpage/#{@new_page_name}"

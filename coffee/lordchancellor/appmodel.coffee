@@ -3,15 +3,15 @@ define (require, exports, module) ->
   jQuery = require 'jquery'
   _ = require 'underscore'
   Backbone = require 'backbone'
-
-  AppRegions = require 'common/appregions'
+  ft = require 'furniture'
   
   appmodel = new Backbone.Model
     hasUser: true
     brand:
       name: 'Chassis'
       url: '/'
-    apps:
+    frontdoor_app: 'frontdoor'
+    applets:
       [
         {
           appname: 'useradmin'
@@ -24,14 +24,12 @@ define (require, exports, module) ->
           url: '#sitetext'
         }
       ]
-    appregions: AppRegions.user_appregions
-    approutes: [
+    regions: ft.misc.appregions.user_appregions
+    routes: [
       'frontdoor:route'
-      'useradmin:route'
-      'sitetext:route'
       ]
     
-      
+  
   module.exports = appmodel
   
   

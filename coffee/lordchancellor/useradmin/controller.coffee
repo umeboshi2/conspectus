@@ -2,13 +2,19 @@ define (require, exports, module) ->
   $ = require 'jquery'
   Backbone = require 'backbone'
   Marionette = require 'marionette'
-  MainBus = require 'msgbus'
+  ft = require 'furniture'
 
   Views = require 'useradmin/views'
-  AppBus = require 'useradmin/msgbus'
-  
-  { SideBarController } = require 'common/controllers'
-  
+
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
+  AppChannel = Backbone.Wreqr.radio.channel 'useradmin'
+
+
+  { navbar_set_active
+    scroll_top_fast } = ft.util
+
+  { SideBarController } = ft.controllers.sidebar
+    
   #    'useradmin/viewuser/:id': 'view_user'
 
   side_bar_data = new Backbone.Model
@@ -32,7 +38,7 @@ define (require, exports, module) ->
       ]
 
   class Controller extends SideBarController
-    mainbus: MainBus
+    mainbus: MainChannel
     sidebarclass: Views.SideBarView
     sidebar_model: side_bar_data
 
@@ -41,29 +47,29 @@ define (require, exports, module) ->
 
     list_users: ->
       @make_sidebar()
-      userlist = AppBus.reqres.request 'get-users'
+      userlist = AppChannel.reqres.request 'get-users'
       response = userlist.fetch()
       response.done =>
         view = new Views.UserListView
           collection: userlist
-        @App.content.show view
+        @_show_content view
 
     add_user: ->
       @make_sidebar()
       console.log "add_user called on controller"
       view = new Views.NewUserFormView
-      @App.content.show view
+      @_show_content view
       
     list_groups: ->
       @make_sidebar()
       console.log "list_groups called on controller"
 
-      grouplist = AppBus.reqres.request 'get-groups'
+      grouplist = AppChannel.reqres.request 'get-groups'
       response = grouplist.fetch()
       response.done =>
         view = new Views.GroupListView
           collection: grouplist
-        @App.content.show view
+        @_show_content view
         
 
     add_group: ->
@@ -72,22 +78,23 @@ define (require, exports, module) ->
       #@set_header 'add group'
       
       view = new Views.NewGroupFormView
-      @App.content.show view
+      @_show_content view
 
     view_user: (user_id) ->
       @make_sidebar()
       console.log "view_user called on controller"
       #@set_header 'view user'
 
-      users = AppBus.reqres.request 'get-users'
+      users = AppChannel.reqres.request 'get-users'
       
       view = new Views.ViewUserView
         model: users.get user_id
-      @App.content.show view
+      @_show_content view
       
     start: ->
-      if @App.content.hasView()
-        @App.content.empty()
+      content = MainChannel.reqres.request 'main:app:get-region', 'content'
+      if content.hasView()
+        content.empty()
       #console.log 'controller.start called'
       @make_main_content()
       #console.log 'wiki started'

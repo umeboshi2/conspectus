@@ -1,12 +1,13 @@
 # modular template loading
 define (require, exports, module) ->
   tc = require 'teacup'
+  ft = require 'furniture'
   
   # Main Templates must use teacup.
   # The template must be a teacup.renderable, 
   # and accept a layout model as an argument.
 
-  { form_group_input_div } = require 'common/templates'
+  { form_group_input_div } = ft.templates.forms
       
   ########################################
   # Templates
