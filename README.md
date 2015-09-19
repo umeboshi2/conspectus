@@ -32,55 +32,42 @@ grunt
 basic structure
 ----------------
 
-Common
+What was "common" is now furniture.  Furniure provides widgets and functions for
+making the applications.
 
-- util
-  - basic utilities used throughout project
-- mainpage
-  - initialize main page with layout and navbar
-- mainviews
-  - layout and navbar views for mainpage
-- templates
-  - templates for layout and navbar views
-  - common sidebar template
-- approuters
-  - special router to set 'active' class on navbar
-- basecollection
-  - common parse code to bypass sending a bare 
-    array object as a json response
-- controllers
-  - basic controller with attached utils
-  - sidebar controller
-- localstoragemodel
-  - simple model with localStorage backend (not really useful)
-- views
-  - sidebar
-    - basic sidebar view
-  - formview
-    - simple form view
-  - editor
-    - base view using ace editor
+Now, common is a place for site-wide code shared between pages.
 
-Site
+A site is a collection of pages, each page possibly being a single
+page application.
 
+A page is a single page application.  It's usually located at /<page> or
+/client/<page>.  A page is an environment for running a set of applets.
+Currently, one applet runs in the page at any time.  Also, each applet
+currently consists of a sidebar div and a main-content div.  The page
+should provide access to each applet intended to be run in that page, usually
+by providing a button, menu, or link.
+
+
+Page
 - main
   - configure requirejs paths
   - start application
 - application
   - create appmodel
+	- appmodel is either static requirement or json from server
   - prepare regions and start backbone history
-  - init main page
   - init app routers
   - setup event handlers for managing views in app regions
-- msgbus
+  - init main page
+- msgbus "replaced by Backbone.Wreqr.radio.channel 'global'"
   - MainBus
   - main channel for messages, events, and commands
 - models
-  - sitewide models
+  - pagewide models
 - collections
-  - sitewide collections
+  - pagewide collections
 
-App
+Applet
 
 - main
   - setup router and routes
