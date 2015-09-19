@@ -1,7 +1,6 @@
 define (require, exports, module) ->
   Backbone = require 'backbone'
   Marionette = require 'marionette'
-  Marionette = require 'marionette'
   ft = require 'furniture'
   
   Models = require 'useradmin/models'
