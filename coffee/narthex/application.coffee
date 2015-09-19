@@ -5,32 +5,46 @@ define (require, exports, module) ->
   Backbone = require 'backbone'
   bootstrap = require 'bootstrap'
   Marionette = require 'marionette'
+  Wreqr = require 'backbone.wreqr'
+  ft = require 'furniture'
 
-  AppRegions = require 'common/appregions'
-  MainPage = require 'common/mainpage'
+  handles = ft.misc.mainhandles
+  
+  AppModel = require 'appmodel'
 
-  MainBus = require 'msgbus'
-  appmodel = require 'appmodel'
-    
-  { set_get_current_user_handler } = require 'common/models'
+  
+  MainChannel = Backbone.Wreqr.radio.channel 'global'
 
+
+  set_get_current_user_handler = ft.models.base.set_get_current_user_handler
+  
   current_user_url = '/rest/v0/main/current/user'
-  set_get_current_user_handler MainBus, current_user_url
+  set_get_current_user_handler MainChannel, current_user_url
       
-  MainPage.set_mainpage_init_handler MainBus
-  MainPage.set_main_navbar_handler MainBus
+  
+  handles.set_mainpage_init_handler()
+  handles.set_main_navbar_handler()
+
+  #layout = Views.BootstrapNoGridLayout
+  #navbar = Views.BootstrapNavBarView
+  #MainPage.set_init_page_handler MainBus, 'nogridpage', layout, navbar
+
+  
   
   require 'frontdoor/main'
       
   app = new Marionette.Application()
-    
   app.ready = false
 
-  user = MainBus.reqres.request 'get-current-user'
+  console.log AppModel
+  
+  user = MainChannel.reqres.request 'main:app:current-user'
   response = user.fetch()
   response.done ->
-    AppRegions.prepare_app app, appmodel, MainBus
+    handles.prepare_app app, AppModel
     app.ready = true
+    console.log "user #{user}"
+
   
   module.exports = app
   

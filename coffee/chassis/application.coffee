@@ -44,7 +44,7 @@ define (require, exports, module) ->
 
   console.log AppModel
   
-  user = MainChannel.reqres.request 'get-current-user'
+  user = MainChannel.reqres.request 'main:app:current-user'
   response = user.fetch()
   response.done ->
     handles.prepare_app app, AppModel

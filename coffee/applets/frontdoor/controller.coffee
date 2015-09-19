@@ -57,9 +57,7 @@ define (require, exports, module) ->
       #response.done =>
       view = new Views.FrontDoorMainView
         model: page
-      regions = MainChannel.reqres.request 'main:app:regions'
-      content_region = regions.get 'content'
-      content_region.show view
+      @_show_content view
 
     start: ->
       #console.log 'frontdoor controller.start called'
